@@ -50,7 +50,7 @@ class MyHomePage extends StatelessWidget {
         ],
       ),
       onTap: () {
-        //dirty the file :)
+        //dirty the file again :)
         int incr = 0;
         Firestore.instance.runTransaction((transaction) async {
 
