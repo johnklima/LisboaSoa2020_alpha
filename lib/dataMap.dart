@@ -6,6 +6,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 GoogleMapController mapController;
 
+// This is just copied over from your original code, I added a new
+// class to start the page instead of keeping it in the main.dart
+
+// DataAndMap name should be changed, I agree !
 class DataAndMap extends StatefulWidget {
   @override
   _MyAppState createState() => new _MyAppState();

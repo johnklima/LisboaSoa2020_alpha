@@ -15,6 +15,11 @@ part 'audioFiles.g.dart';
 /// An annotation for the code generator to know that this class needs the
 /// JSON serialization logic to be generated.
 ///
+
+// https://flutter.dev/docs/development/data-and-backend/json
+// followed this tutorial to set this up, all new to me so it
+// needs to be looked over.
+
 @JsonSerializable()
 class AudioFiles{
   AudioFiles(this.guid, this.position, this.duration, this.location);

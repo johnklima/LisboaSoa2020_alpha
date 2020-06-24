@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert';
+import 'dart:convert'; // not sure if this is needed.
 import 'dart:io' as io;
 
 import 'package:flutter/cupertino.dart';
@@ -7,12 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter/services.dart'; // not sure if this is needed.
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_guid/flutter_guid.dart';
-import 'package:uuid/uuid.dart';
+//import 'package:uuid/uuid.dart';
 
 //Project Packages
 import 'audioFiles.dart';
@@ -26,14 +26,15 @@ class _MyAppState extends State<AudioRecorder> {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-        appBar: AppBar(),
-        body: SafeArea(
-          child: new ExampleRecorder(),
-        ),
+      appBar: AppBar(),
+      body: SafeArea(
+        child: new ExampleRecorder(),
+      ),
     );
   }
 }
 
+// get's the local directory when the app is loaded.
 class ExampleRecorder extends StatefulWidget {
   final LocalFileSystem localFileSystem;
 
@@ -50,6 +51,7 @@ class RecorderExampleState extends State<ExampleRecorder> {
   Recording _current;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
 
+  // variables stored for sending to the json on save.
   String guid;
   Position pos;
   String dur;
@@ -62,6 +64,9 @@ class RecorderExampleState extends State<ExampleRecorder> {
     _init();
   }
 
+//The widget structure is copied from the example on pub.dev
+//I've made some minor and major changes here and there but it
+//is still quite messy in my opinion, but it work for now.
   @override
   Widget build(BuildContext context) {
     return new Center(
@@ -76,6 +81,8 @@ class RecorderExampleState extends State<ExampleRecorder> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.all(0.0),
+
+                    //The record button, changes on function on a switch.
                     child: new FlatButton(
                       onPressed: () {
                         switch (_currentStatus) {
@@ -107,31 +114,34 @@ class RecorderExampleState extends State<ExampleRecorder> {
                       color: Colors.lightBlue,
                     ),
                   ),
+
+                  //Stop button
                   new FlatButton(
                     onPressed:
-                    _currentStatus != RecordingStatus.Unset ? _stop : null,
+                        _currentStatus != RecordingStatus.Unset ? _stop : null,
                     child:
-                    new Text("Stop", style: TextStyle(color: Colors.white)),
+                        new Text("Stop", style: TextStyle(color: Colors.white)),
                     color: Colors.blueAccent.withOpacity(0.5),
                   ),
                   SizedBox(
                     width: 4,
                   ),
+
+                  // Play Button
                   new FlatButton(
                     onPressed: onPlayAudio,
                     child:
-                    new Text("Play", style: TextStyle(color: Colors.white)),
+                        new Text("Play", style: TextStyle(color: Colors.white)),
                     color: Colors.blueAccent.withOpacity(0.5),
                   ),
 
+                  //Save Button
                   new FlatButton(
                     onPressed: saveToJson,
                     child:
-                    new Text("Save", style: TextStyle(color: Colors.white)),
+                        new Text("Save", style: TextStyle(color: Colors.white)),
                     color: Colors.blueAccent.withOpacity(0.5),
                   ),
-
-
                 ],
               ),
               new Column(
@@ -143,19 +153,23 @@ class RecorderExampleState extends State<ExampleRecorder> {
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+
+                        //Average power text widget
                         Container(
                           margin: EdgeInsets.only(
                             top: 10,
-                            bottom:  5,
+                            bottom: 5,
                             left: 30,
                             right: 30,
                           ),
                           child: new Text('Avg Power:'),
                         ),
+
+                        //peak power text widget
                         Container(
                           margin: EdgeInsets.only(
                             top: 10,
-                            bottom:  5,
+                            bottom: 5,
                             left: 30,
                             right: 30,
                           ),
@@ -169,25 +183,31 @@ class RecorderExampleState extends State<ExampleRecorder> {
                     child: new Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
+
+                        //Average power counter widget
                         Container(
                           margin: EdgeInsets.only(
                             top: 10,
-                            bottom:  5,
+                            bottom: 5,
                             left: 30,
                             right: 30,
                           ),
                           //child: new Text(_current?.metering?.averagePower?.toStringAsFixed(1)),
-                          child: new Text('Avg Power: ${_current?.metering?.averagePower?.toStringAsFixed(1)}'),
+                          child: new Text(
+                              'Avg Power: ${_current?.metering?.averagePower?.toStringAsFixed(1)}'),
                         ),
+
+                        //Peak power counter widget
                         Container(
                           margin: EdgeInsets.only(
                             top: 10,
-                            bottom:  5,
+                            bottom: 5,
                             left: 30,
                             right: 30,
                           ),
                           //child: new Text(_current?.metering?.peakPower?.toStringAsFixed(1)),
-                          child: new Text('Peak Power: ${_current?.metering?.peakPower?.toStringAsFixed(1)}'),
+                          child: new Text(
+                              'Peak Power: ${_current?.metering?.peakPower?.toStringAsFixed(1)}'),
                         ),
                       ],
                     ),
@@ -195,46 +215,46 @@ class RecorderExampleState extends State<ExampleRecorder> {
                 ],
               ),
 
-
+              // Prints the info about (File path, Recording length, format)
               new Column(
                 children: <Widget>[
                   Container(
                     margin: EdgeInsets.only(
                       top: 10,
-                      bottom:  2,
+                      bottom: 2,
                       left: 10,
                       right: 10,
                     ),
-
-                    child: new Text("File path",
+                    child: new Text(
+                      "File path",
                       style: TextStyle(fontWeight: FontWeight.bold),
                     ),
                   ),
                   Container(
                     margin: EdgeInsets.only(
                       top: 10,
-                      bottom:  5,
-                      left: 10,
-                      right: 10,
-                    ),
-                    child: new Text("${_current?.path}",
-                    style: TextStyle(fontStyle: FontStyle.italic),
-                    ),
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(
-                      top: 10,
-                      bottom:  5,
+                      bottom: 5,
                       left: 10,
                       right: 10,
                     ),
                     child: new Text(
-                        "Audio recording duration : ${_current?.duration.toString()}")
+                      "${_current?.path}",
+                      style: TextStyle(fontStyle: FontStyle.italic),
+                    ),
                   ),
+                  Container(
+                      margin: EdgeInsets.only(
+                        top: 10,
+                        bottom: 5,
+                        left: 10,
+                        right: 10,
+                      ),
+                      child: new Text(
+                          "Audio recording duration : ${_current?.duration.toString()}")),
                   Container(
                     margin: EdgeInsets.only(
                       top: 10,
-                      bottom:  5,
+                      bottom: 5,
                       left: 10,
                       right: 10,
                     ),
@@ -247,8 +267,8 @@ class RecorderExampleState extends State<ExampleRecorder> {
     );
   }
 
+  //Function for initiating a new recording, making a new guid etc.
   _init() async {
-
     try {
       if (await FlutterAudioRecorder.hasPermissions) {
         io.Directory appDocDirectory;
@@ -259,18 +279,17 @@ class RecorderExampleState extends State<ExampleRecorder> {
           appDocDirectory = await getExternalStorageDirectory();
         }
 
-        pos = await Geolocator().getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        pos = await Geolocator()
+            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         Guid iD = Guid.newGuid;
         guid = iD.value;
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        loc = appDocDirectory.path +
-            "/" + guid;
+        loc = appDocDirectory.path + "/" + guid;
 
         // .wav <---> AudioFormat.WAV
         // .mp4 .m4a .aac <---> AudioFormat.AAC
         // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
-        _recorder =
-            FlutterAudioRecorder(loc);
+        _recorder = FlutterAudioRecorder(loc);
         //_current.path = customPath;
 
         await _recorder.initialized;
@@ -292,6 +311,7 @@ class RecorderExampleState extends State<ExampleRecorder> {
     }
   }
 
+  //Starts recording the audio, this loops while user is recording.
   _start() async {
     try {
       await _recorder.start();
@@ -312,26 +332,33 @@ class RecorderExampleState extends State<ExampleRecorder> {
           _current = current;
           _currentStatus = _current.status;
         });
-    // ignore: null_aware_before_operator
-        if (_current?.duration?.inSeconds > 30.00){
+
+        // if statement to stop recording if it goes over 30 sec.
+
+        // ignore: null_aware_before_operator
+        if (_current?.duration?.inSeconds > 30.00) {
           _stop();
         }
+
       });
     } catch (e) {
       print(e);
     }
   }
 
+  //Resumes the recording
   _resume() async {
     await _recorder.resume();
     setState(() {});
   }
 
+  //Pauses the recording
   _pause() async {
     await _recorder.pause();
     setState(() {});
   }
-
+  //Stops the recording and stores it in the local drive.
+  //Perhaps move this to the "Save" function.
   _stop() async {
     var result = await _recorder.stop();
     print("Stop recording: ${result.path}");
@@ -345,6 +372,7 @@ class RecorderExampleState extends State<ExampleRecorder> {
     });
   }
 
+  //The widget that sets the text for the recording button
   Widget buildText(RecordingStatus status) {
     var text = "";
     switch (_currentStatus) {
@@ -374,15 +402,18 @@ class RecorderExampleState extends State<ExampleRecorder> {
     return Text(text, style: TextStyle(color: Colors.white));
   }
 
+  //Play the recorder audio.
+  //This is what we should use in the audio lib I suppose.
   void onPlayAudio() async {
     AudioPlayer audioPlayer = AudioPlayer();
     await audioPlayer.play(_current.path, isLocal: true);
   }
 
-  void saveToJson(){
-   AudioFiles audioFiles =  AudioFiles(guid, pos.toString(), dur, loc);
-   print(audioFiles.toJson());
+  //Save function, currently only stores the info in the json file.
+  //I haven't really found the json file yet so I am not sure if it works,
+  //or if this is the correct way to send it to the json.
+  void saveToJson() {
+    AudioFiles audioFiles = AudioFiles(guid, pos.toString(), dur, loc);
+    print(audioFiles.toJson());
   }
-
-
 }
