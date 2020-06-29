@@ -30,11 +30,11 @@ class FireAudioState extends State<FireAudio> {
 
   Future<String> downloadFile(String trackName) async {
     final Directory tempDir = Directory.systemTemp;
-    final File file = File('${tempDir.path}/${trackName}.m4a');
-    final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}.m4a');
+    final File file = File('${tempDir.path}/${trackName}');
+    final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
     final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
     final int byteNumber = (await downloadTask.future).totalByteCount;
-    return '/data/user/0/com.cityarts.lisboasoa2020/cache/${trackName}.m4a';
+    return '/data/user/0/com.cityarts.lisboasoa2020/cache/${trackName}';
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
