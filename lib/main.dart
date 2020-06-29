@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'buttons.dart';
 import 'dataMap.dart';
 import 'recorder.dart';
+import "calendar.dart";
 
 void main() => runApp(MyApp());
 
@@ -71,6 +72,11 @@ class HomePage extends StatelessWidget {
             height: 80,
             color: Colors.yellow[200],
             child: NavigateTo(AudioRecorder()),
+          ),
+          Container(
+            height: 80,
+            color: Colors.yellow[3+00],
+            child: NavigateTo(Calendar()),
           ),
         ],
       ),

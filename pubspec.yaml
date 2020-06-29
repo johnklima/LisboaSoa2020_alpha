@@ -34,7 +34,7 @@ dependencies:
   flutter_guid: ^0.1.0
   uuid: ^2.1.0
   json_annotation: ^3.0.1
-  #
+  flutter_calendar_carousel: ^1.4.12
   cloud_firestore:
 
   # The following adds the Cupertino Icons font to your application.
