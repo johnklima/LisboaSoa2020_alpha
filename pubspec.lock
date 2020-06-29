@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.1"
+  audioplayer2:
+    dependency: "direct main"
+    description:
+      name: audioplayer2
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.2"
   audioplayers:
     dependency: "direct main"
     description:
@@ -212,7 +219,7 @@ packages:
     source: hosted
     version: "7.3.0"
   firebase_core:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: firebase_core
       url: "https://pub.dartlang.org"
@@ -232,6 +239,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
+  firebase_database:
+    dependency: "direct main"
+    description:
+      name: firebase_database
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.6"
   firebase_storage:
     dependency: "direct main"
     description:

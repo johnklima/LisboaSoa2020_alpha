@@ -38,7 +38,15 @@ dependencies:
   # <JPK> im not using versions here, lets see if it does not make things simpler
   cloud_firestore:
   firebase_storage:
+  firebase_core:
+  firebase_database:
   video_player:
+  audioplayer2: ^0.5.2
+
+
+
+
+
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

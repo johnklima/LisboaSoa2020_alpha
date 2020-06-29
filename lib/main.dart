@@ -7,6 +7,7 @@ import 'dataMap.dart';
 import 'recorder.dart';
 import "calendar.dart";
 import 'videoplayer.dart';
+import 'firebaseaudio.dart';
 
 void main() => runApp(MyApp());
 
@@ -83,6 +84,11 @@ class HomePage extends StatelessWidget {
             height: 80,
             color: Colors.yellow[3+00],
             child: NavigateTo(VideoPlayerScreen()),
+          ),
+          Container(
+            height: 80,
+            color: Colors.yellow[3+00],
+            child: NavigateTo(FireAudio()),
           ),
         ],
       ),
