@@ -6,6 +6,7 @@ import 'buttons.dart';
 import 'dataMap.dart';
 import 'recorder.dart';
 import "calendar.dart";
+import 'videoplayer.dart';
 
 void main() => runApp(MyApp());
 
@@ -77,6 +78,11 @@ class HomePage extends StatelessWidget {
             height: 80,
             color: Colors.yellow[3+00],
             child: NavigateTo(Calendar()),
+          ),
+          Container(
+            height: 80,
+            color: Colors.yellow[3+00],
+            child: NavigateTo(VideoPlayerScreen()),
           ),
         ],
       ),
