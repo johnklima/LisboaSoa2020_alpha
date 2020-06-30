@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
-import 'package:audioplayer2/audioplayer2.dart';
+
 import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
+
+import 'package:audioplayers/audioplayers.dart';
 
 class FireAudio extends StatefulWidget {
   @override
@@ -11,7 +13,6 @@ class FireAudio extends StatefulWidget {
 }
 
 class FireAudioState extends State<FireAudio> {
-  // List tracks = ["one", "track1", "track2", "track3", "track4"]; // note: each track button should now be rendered based on tracks within within Firebase database/Firestore
 
   @override
   initState() {
@@ -24,17 +25,25 @@ class FireAudioState extends State<FireAudio> {
   }
 
   Future<void> playTrack(track) async { // may not need to be a future
-    AudioPlayer audioPlayer = new AudioPlayer();
-    await audioPlayer.play(track);
+
+    debugPrint('playtrack:$track');
+
+    AudioPlayer audioPlayer = AudioPlayer();
+    await audioPlayer.play(track, isLocal: true);
+
+
   }
 
   Future<String> downloadFile(String trackName) async {
     final Directory tempDir = Directory.systemTemp;
+    debugPrint('path:$tempDir');
+
     final File file = File('${tempDir.path}/${trackName}');
+    debugPrint('track:${trackName}');
     final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
     final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
     final int byteNumber = (await downloadTask.future).totalByteCount;
-    return '/data/user/0/com.cityarts.lisboasoa2020/cache/${trackName}';
+    return '/data/user/0/com.cityarts.lisboasoa2020/code_cache/${trackName}';
   }
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
