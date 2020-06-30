@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
+import 'GoogleMaps/markers.dart';
 
 GoogleMapController mapController;
 
@@ -35,43 +36,7 @@ class DataMap extends StatelessWidget {
   //Map start-up location
   final LatLng _center = const LatLng(38.722586, -9.137905);
 
-  //Markers (Turn this into a own .dart file that works with json.
-  final Set<Marker> _markers = {
-    Marker(
-      rotation: 34,
-      markerId: MarkerId("Marker1"),
-      position: const LatLng(38.722586, -9.137905),
-      infoWindow: InfoWindow(
-        title: "Its the first Marker",
-        snippet: "marker is first place",
-      ),
-  ),
-    Marker(
-      markerId: MarkerId("Marker2"),
-      position: const LatLng(38.725586, -9.137905),
-      infoWindow: InfoWindow(
-        title: "Its the second Marker",
-        snippet: "marker is second place",
-      ),
-  ),
-    Marker(
-      markerId: MarkerId("Marker3"),
-      position: const LatLng(38.725586, -9.134905),
-      infoWindow: InfoWindow(
-        title: "Its the third Marker",
-        snippet: "marker is third place",
-      ),
-  ),
-    Marker(
-      markerId: MarkerId("YourPosition"),
 
-
-      infoWindow: InfoWindow(
-        title: "You Are Here",
-        snippet: "This is where you are!",
-      ),
-  ),
-  };
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
@@ -130,7 +95,7 @@ class DataMap extends StatelessWidget {
           children: <Widget>[
             GoogleMap(
               onMapCreated: _onMapCreated,
-              markers: _markers,
+              markers: StaticMarkers().markers,
               //mapType: MapType.normal,
               initialCameraPosition: CameraPosition(target: _center, zoom: 15),
             ),
@@ -175,167 +140,4 @@ class DataMap extends StatelessWidget {
       */
   }
 
-}
-
-class Utils {
-  static String mapStyles = '''[
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dadada"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#c9c9c9"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  }
-]''';
 }
