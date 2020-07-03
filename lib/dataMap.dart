@@ -6,6 +6,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:async';
 import 'GoogleMaps/markers.dart';
+import 'GoogleMaps/mapEventPage.dart';
 
 GoogleMapController mapController;
 
@@ -14,8 +15,10 @@ GoogleMapController mapController;
 
 // DataAndMap name should be changed, I agree !
 class DataAndMap extends StatefulWidget {
+
   @override
   _MyAppState createState() => new _MyAppState();
+
 }
 
 class _MyAppState extends State<DataAndMap> {
@@ -24,24 +27,74 @@ class _MyAppState extends State<DataAndMap> {
     return new Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: new DataMap(),
+        child: new Map(),
       ),
     );
   }
 }
 
-class DataMap extends StatelessWidget {
+class Map extends StatefulWidget {
+
+  bool eventPageOn = false;
+
+  EnterEventPage(){
+      return AlertDialog(
+        title: Text("Hello Wold"),
+        actions: <Widget>[
+          MaterialButton(
+            elevation: 5.0,
+            child: Text("Return"),
+            onPressed: () {
+            },
+          ),
+        ],
+      );
+  }
+
+  @override
+  _MapState createState() => _MapState();
+}
+
+class _MapState extends State<Map> {
   Completer<GoogleMapController> _controller = Completer();
 
   //Map start-up location
   final LatLng _center = const LatLng(38.722586, -9.137905);
 
 
+  void _onMapCreated(GoogleMapController controller) {
+    _controller.complete(controller);
+  }
+    @override
+    Widget build(BuildContext context) {
+      return Container(
+        child: Stack(
+          children: <Widget>[
+            GoogleMap(
+              onMapCreated: _onMapCreated,
+              markers: StaticMarkers().markers,
+              //mapType: MapType.normal,
+              initialCameraPosition: CameraPosition(target: _center, zoom: 15),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+
+
+/*
+class DataMap extends StatelessWidget {
+  Completer<GoogleMapController> _controller = Completer();
+
+  //Map start-up location
+  final LatLng _center = const LatLng(38.722586, -9.137905);
+
+  bool eventPageOn;
 
   void _onMapCreated(GoogleMapController controller) {
     _controller.complete(controller);
   }
-
 
   Widget _buildListItem(BuildContext context, DocumentSnapshot document) {
     return ListTile(
@@ -87,26 +140,27 @@ class DataMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      SizedBox(
-        width: MediaQuery.of(context).size.width, // or use fixed size like 200
-        height: MediaQuery.of(context).size.height / 3,
-        child: Stack(
-          children: <Widget>[
-            GoogleMap(
-              onMapCreated: _onMapCreated,
-              markers: StaticMarkers().markers,
-              //mapType: MapType.normal,
-              initialCameraPosition: CameraPosition(target: _center, zoom: 15),
-            ),
-          ],
-        ),
-        /*
+    return Container(
+
+      child: Stack(
+        children: <Widget>[
+          GoogleMap(
+            onMapCreated: _onMapCreated,
+            markers: StaticMarkers().markers,
+            //mapType: MapType.normal,
+            initialCameraPosition: CameraPosition(target: _center, zoom: 15),
+          ),
+          //_EventPage(),
+        ],
+      ),
+    );
+    /*
                   child:
 
 
                   )*/
-      ),
+
+    /*
       SizedBox(
           width:
               MediaQuery.of(context).size.width, // or use fixed size like 200
@@ -123,7 +177,8 @@ class DataMap extends StatelessWidget {
                       _buildListItem(context, snapshot.data.documents[index]),
                 );
               })),
-    ]);
+
+       */
 
     /*
       StreamBuilder(
@@ -139,5 +194,7 @@ class DataMap extends StatelessWidget {
           }),
       */
   }
-
 }
+
+ */
+

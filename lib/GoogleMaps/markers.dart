@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+import 'package:lisboasoa2020/dataMap.dart';
+
 class StaticMarkers {
 
   final Set<Marker> markers = {
@@ -31,6 +33,7 @@ class StaticMarkers {
       position: const LatLng(38.720586, -9.138905),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       infoWindow: InfoWindow(
+        onTap: () { Map().EnterEventPage(); },
         title: "This event is over",
         snippet: "You didn't make it .. ",
       ),

@@ -16,6 +16,7 @@ import 'package:flutter_guid/flutter_guid.dart';
 
 //Project Packages
 import 'audioFiles.dart';
+import 'main.dart';
 
 class AudioRecorder extends StatefulWidget {
   @override
@@ -36,11 +37,6 @@ class _MyAppState extends State<AudioRecorder> {
 
 // get's the local directory when the app is loaded.
 class ExampleRecorder extends StatefulWidget {
-  final LocalFileSystem localFileSystem;
-
-// Calls a function from a imported package to get the local directory.
-  ExampleRecorder({localFileSystem})
-      : this.localFileSystem = localFileSystem ?? LocalFileSystem();
 
   @override
   State<StatefulWidget> createState() => new RecorderExampleState();
@@ -50,6 +46,8 @@ class RecorderExampleState extends State<ExampleRecorder> {
   FlutterAudioRecorder _recorder;
   Recording _current;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
+
+  var DocDir;
 
   // variables stored for sending to the json on save.
   String guid;
@@ -286,6 +284,9 @@ class RecorderExampleState extends State<ExampleRecorder> {
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
         loc = appDocDirectory.path + "/" + guid;
 
+        DocDir = appDocDirectory.path;
+        print("This is the Doc Dir !!!! " + DocDir);
+
         // .wav <---> AudioFormat.WAV
         // .mp4 .m4a .aac <---> AudioFormat.AAC
         // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
@@ -363,8 +364,8 @@ class RecorderExampleState extends State<ExampleRecorder> {
     var result = await _recorder.stop();
     print("Stop recording: ${result.path}");
     print("Stop recording: ${result.duration}");
-    File file = widget.localFileSystem.file(result.path);
-    print("File length: ${await file.length()}");
+    //File file = MyApp().localFileSystem.file(result.path);
+    //print("File length: ${await file.length()}");
     setState(() {
       _current = result;
       _currentStatus = _current.status;

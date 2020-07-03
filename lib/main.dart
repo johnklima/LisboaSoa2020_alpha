@@ -1,5 +1,7 @@
 //External Packages
 import 'package:flutter/material.dart';
+import 'package:file/file.dart';
+import 'package:file/local.dart';
 
 //Internal Packages
 import 'buttons.dart';
@@ -12,6 +14,14 @@ import 'firebaseaudio.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
+
+  final LocalFileSystem localFileSystem;
+// Calls a function from a imported package to get the local directory.
+  MyApp({localFileSystem})
+      : this.localFileSystem = localFileSystem ?? LocalFileSystem();
+
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
