@@ -10,29 +10,23 @@ import 'recorder.dart';
 import "calendar.dart";
 import 'videoplayer.dart';
 import 'firebaseaudio.dart';
+import 'website.dart';
 
 void main() => runApp(MyApp());
 
 class MyApp extends StatefulWidget {
-
-
-
   @override
   _MyAppState createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   Widget build(BuildContext context) {
-
     return MaterialApp(
-
       title: 'Lisboa Soa 2020',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-
       home: HomePage(),
 
       /*
@@ -52,8 +46,7 @@ class _MyAppState extends State<MyApp> {
       */
     );
   }
-
-  }
+}
 
 class HomePage extends StatelessWidget {
   @override
@@ -82,18 +75,23 @@ class HomePage extends StatelessWidget {
           ),
           Container(
             height: 80,
-            color: Colors.yellow[3+00],
+            color: Colors.yellow[3 + 00],
             child: NavigateTo(Calendar()),
           ),
           Container(
             height: 80,
-            color: Colors.yellow[3+00],
+            color: Colors.yellow[3 + 00],
             child: NavigateTo(VideoPlayerScreen()),
           ),
           Container(
             height: 80,
-            color: Colors.yellow[3+00],
+            color: Colors.yellow[3 + 00],
             child: NavigateTo(FireAudio()),
+          ),
+          Container(
+            height: 80,
+            color: Colors.yellow[3 + 00],
+            child: NavigateTo(Website()),
           ),
         ],
       ),
