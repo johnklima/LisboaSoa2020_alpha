@@ -5,7 +5,6 @@ import "package:flutter/material.dart";
 // Here we can keep all our button widgets, this will help us keep our
 // scripts much cleaner.
 
-
 // Navigates to a new page.
 class NavigateTo extends StatelessWidget {
   var pageName;
@@ -16,23 +15,29 @@ class NavigateTo extends StatelessWidget {
     //The container info might be best to keep in the other widget
     //rather than in here, perhaps change this to only a Raised Button.
     return Container(
-      margin: EdgeInsets.only(
-      top: 20,
-      bottom:  20,
-      left: 100,
-      right: 100,
-    ),
+      margin: EdgeInsets.all(15),
+      child: ButtonTheme(
+        minWidth: 250,
+        height: 60,
+        child: RaisedButton(
+          color: Colors.white,
+          child: Text(
+              pageName.toString(),
+          style: Theme.of(context).textTheme.bodyText1,
 
-      child: RaisedButton(
-        color: Colors.lightBlueAccent[100],
-        child: Text(pageName.toString()),
-        textColor: Colors.black45,
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => pageName),
-          );
-        },
+          ),
+
+          textColor: Colors.lightGreen,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25.0),
+          ),
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => pageName),
+            );
+          },
+        ),
       ),
     );
   }
@@ -42,11 +47,9 @@ class NavigateTo extends StatelessWidget {
 /// but it's not working when having the widget in here for
 /// some reason.
 class NavigateBack extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Container(
-
       child: RaisedButton(
         child: Text("Go Back"),
         onPressed: () {
