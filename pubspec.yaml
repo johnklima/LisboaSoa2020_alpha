@@ -74,6 +74,15 @@ flutter:
   assets:
     - assets/
     - assets/Graphic/
+    - assets/Logo/
+    - assets/MapMarkers/
+    - assets/Icons/
+
+
+  fonts:
+    - family: Consola
+      fonts:
+        - asset: fonts/consola.ttf
 
   # To add assets to your application, add an assets section, like this:
   # assets:
@@ -105,3 +114,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

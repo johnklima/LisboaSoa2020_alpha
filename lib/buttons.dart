@@ -8,7 +8,8 @@ import "package:flutter/material.dart";
 // Navigates to a new page.
 class NavigateTo extends StatelessWidget {
   var pageName;
-  NavigateTo(this.pageName);
+  String buttonText;
+  NavigateTo(this.pageName, this.buttonText);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class NavigateTo extends StatelessWidget {
         child: RaisedButton(
           color: Colors.white,
           child: Text(
-              pageName.toString(),
+            buttonText,
           style: Theme.of(context).textTheme.bodyText1,
 
           ),

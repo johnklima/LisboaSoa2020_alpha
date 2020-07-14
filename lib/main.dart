@@ -1,7 +1,10 @@
-//External Packages
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:file/file.dart';
 import 'package:file/local.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
 //Internal Packages
@@ -27,18 +30,14 @@ class _MyAppState extends State<MyApp> {
       title: 'Lisboa Soa 2020',
       theme: ThemeData(
         primarySwatch: Colors.lightGreen,
-
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
           bodyText1: TextStyle(
-              fontSize: 20,
-              fontWeight:
-              FontWeight.bold,
+            fontFamily: 'Consola',
+            fontSize: 25,
             color: Colors.lightGreen,
-
           ),
-        )
-
+        ),
       ),
       home: HomePage(),
 
@@ -77,41 +76,69 @@ class HomePage extends StatelessWidget {
             height: double.infinity,
             fit: BoxFit.fitWidth,
           ),
-
           Container(
             height: double.infinity,
             width: double.infinity,
+            margin: EdgeInsets.only(top: 60),
             child: Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child: NavigateTo(DataAndMap()),
+                    child: NavigateTo(FireAudio(), "listen"),
                   ),
                   Container(
-
-                    child: NavigateTo(AudioRecorder()),
+                    child: NavigateTo(AudioRecorder(), "record"),
                   ),
                   Container(
-                    child: NavigateTo(Calendar()),
+                    child: NavigateTo(Website(), "calendar"),
                   ),
                   Container(
-                    child: NavigateTo(VideoPlayerScreen()),
-                  ),
-                  Container(
-                    child: NavigateTo(FireAudio()),
-                  ),
-                  Container(
-                    child: NavigateTo(Website()),
+                    child: NavigateTo(DataAndMap(), "see"),
                   ),
                 ],
               ),
             ),
           ),
-
+          Column(
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    margin: EdgeInsets.fromLTRB(10, 35, 0, 0),
+                    child: Image(
+                      image: AssetImage(
+                          "assets/Logo/LisboaSoa_Logo_Corner_Small.png"),
+                      alignment: Alignment.topLeft,
+                      width: 150,
+                      height: 150,
+                    ),
+                  ),
+                  Container(
+                    margin: EdgeInsets.fromLTRB(0, 0, 25, 0),
+                    child: Image(
+                      image:
+                          AssetImage("assets/Graphic/LisboaSoa_Text_Home.png"),
+                      alignment: Alignment.topRight,
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
+          Container(
+            alignment: Alignment.bottomCenter,
+            margin: EdgeInsets.all(20),
+            child: Image(
+              image:
+                  AssetImage("assets/Graphic/LisboaSoa_Text_Bottom_Info.png"),
+            ),
+          ),
         ],
       ),
     );
