@@ -42,7 +42,17 @@ class StaticMarkers {
     Marker(
       markerId: MarkerId("Recorded Sound"),
       position: const LatLng(38.722586, -9.136905),
-      icon: BitmapDescriptor.fromAsset("assets/ListenToThis_Placeholder.png"),
+      icon: BitmapDescriptor.fromAsset("assets/MapMarkers/LisboaSoa_SoaMarker_Large.png"),
+      infoWindow: InfoWindow(
+        title: "Listen to this sound",
+        snippet: "but no sound was to be heard",
+      ),
+    ),
+
+    Marker(
+      markerId: MarkerId("Recorded Sound"),
+      position: const LatLng(38.722586, -9.132905),
+      icon: BitmapDescriptor.fromAsset("assets/MapMarkers/LisboaSoa_ListenMarker_Large.png"),
       infoWindow: InfoWindow(
         title: "Listen to this sound",
         snippet: "but no sound was to be heard",
