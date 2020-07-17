@@ -144,7 +144,13 @@ class _MapState extends State<TheMap> {
       _markers.add(Marker(
           markerId: MarkerId('sourcePin'),
           position: pinPosition, // updated position
-          icon: sourceIcon));
+          icon: sourceIcon,
+        infoWindow: InfoWindow(
+          title: "You are here!",
+        ),
+
+      ),
+      );
     });
   }
 }
