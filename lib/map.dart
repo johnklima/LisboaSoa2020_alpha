@@ -3,12 +3,12 @@ import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:async';
+import 'GoogleMaps/markers.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
-const LatLng SOURCE_LOCATION = LatLng(42.747932, -71.167889);
-const LatLng DEST_LOCATION = LatLng(37.335685, -122.0605916);
+const LatLng SOURCE_LOCATION = LatLng(59.259753, 5.207062);
 
 class TheMap extends StatefulWidget {
   @override
@@ -20,8 +20,8 @@ class _MapState extends State<TheMap> {
   Set<Marker> _markers = Set<Marker>();
 
   //Custom markers
-  BitmapDescriptor sourceIcon;
-  BitmapDescriptor destinationIcon;
+  BitmapDescriptor listenMarker;
+  BitmapDescriptor lisboaSoaMarker;
 
   //Current user location
   LocationData currentLocation;
@@ -46,14 +46,14 @@ class _MapState extends State<TheMap> {
   }
 
   void setSourceAndDestinationIcons() async {
-    sourceIcon = await BitmapDescriptor.fromAssetImage(
+    listenMarker = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 25),
         'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
         .then((onValue) {
       return onValue;
     });
 
-    destinationIcon = await BitmapDescriptor.fromAssetImage(
+    lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 25),
         'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
     // ignore: missing_return
@@ -82,6 +82,7 @@ class _MapState extends State<TheMap> {
           bearing: CAMERA_BEARING);
     }
     return Scaffold(
+      appBar: AppBar(),
       body: Stack(
         children: <Widget>[
           GoogleMap(
@@ -112,9 +113,8 @@ class _MapState extends State<TheMap> {
     _markers.add(Marker(
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
-        icon: sourceIcon));
+        icon: lisboaSoaMarker));
     // destination pin
-    _markers.add(Marker(markerId: MarkerId('destPin'), icon: destinationIcon));
     // set the route lines on the map from source to destination
     // for more info follow this tutorial
   }
@@ -144,13 +144,38 @@ class _MapState extends State<TheMap> {
       _markers.add(Marker(
           markerId: MarkerId('sourcePin'),
           position: pinPosition, // updated position
-          icon: sourceIcon,
+          icon: lisboaSoaMarker,
         infoWindow: InfoWindow(
           title: "You are here!",
         ),
-
       ),
       );
+      addMarkers("Grindhaug",LatLng(59.258248,5.203139), "Listen", "Grindhag", "Skolen");
     });
+  }
+
+  void addMarkers(String markerID,LatLng pos,String type, String Title, String Snippet){
+    if(type == "Listen"){
+      _markers.add(Marker(
+        markerId: MarkerId(markerID),
+        position: pos,
+        icon: listenMarker, //Should be controlled by the type
+        infoWindow: InfoWindow(
+          title: Title,
+          snippet: Snippet,
+        ),
+      ),);
+    }
+    else if(type == "LisboaSoa"){
+      _markers.add(Marker(
+        markerId: MarkerId(markerID),
+        position: pos,
+        icon: lisboaSoaMarker, //Should be controlled by the type
+        infoWindow: InfoWindow(
+          title: Title,
+          snippet: Snippet,
+        ),
+      ),);
+    }
   }
 }
