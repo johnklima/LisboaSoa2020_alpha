@@ -15,6 +15,7 @@ import "calendar.dart";
 import 'videoplayer.dart';
 import 'firebaseaudio.dart';
 import 'website.dart';
+import 'map.dart';
 
 void main() => runApp(MyApp());
 
@@ -96,7 +97,7 @@ class HomePage extends StatelessWidget {
                     child: NavigateTo(Website(), "calendar"),
                   ),
                   Container(
-                    child: NavigateTo(DataAndMap(), "see"),
+                    child: NavigateTo(TheMap(), "see"),
                   ),
                 ],
               ),
