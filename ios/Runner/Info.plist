@@ -50,6 +50,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSAppleMusicUsageDescription</key>
+	<string>We would like to play back audio</string>
 	<key>EnableBackgroundLocationUpdates</key>
 	<true/>
 </dict>
