@@ -6,6 +6,7 @@ import 'package:file/file.dart';
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:lisboasoa2020/audioPlayer.dart';
 
 //Internal Packages
 import 'buttons.dart';
@@ -33,6 +34,7 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.lightGreen,
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
+          headline3: TextStyle(fontSize: 40, fontWeight: FontWeight.bold,color: Colors.white),
           bodyText1: TextStyle(
             fontFamily: 'Consola',
             fontSize: 25,
@@ -88,7 +90,7 @@ class HomePage extends StatelessWidget {
                   Container(
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child: NavigateTo(FireAudio(), "listen"),
+                    child: NavigateTo(AudioPlayer(), "listen"),
                   ),
                   Container(
                     child: NavigateTo(AudioRecorder(), "record"),
