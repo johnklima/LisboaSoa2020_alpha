@@ -1,9 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:async';
-import 'GoogleMaps/markers.dart';
+import 'website.dart';
+
+import 'audioPlayer.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 40;
@@ -22,6 +25,8 @@ class _MapState extends State<TheMap> {
   //Custom markers
   BitmapDescriptor listenMarker;
   BitmapDescriptor lisboaSoaMarker;
+
+  bool eventOverlay;
 
   //Current user location
   LocationData currentLocation;
@@ -163,6 +168,10 @@ class _MapState extends State<TheMap> {
         infoWindow: InfoWindow(
           title: Title,
           snippet: Snippet,
+          onTap: (){Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => (EventPage())));
+          },
         ),
       ),);
     }
