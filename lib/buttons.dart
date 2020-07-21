@@ -25,9 +25,7 @@ class NavigateTo extends StatelessWidget {
           child: Text(
             buttonText,
           style: Theme.of(context).textTheme.bodyText1,
-
           ),
-
           textColor: Colors.lightGreen,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25.0),
