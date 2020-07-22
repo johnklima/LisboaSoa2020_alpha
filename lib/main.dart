@@ -18,6 +18,7 @@ import 'firebaseaudio.dart';
 import 'website.dart';
 import 'map.dart';
 import 'audiomap.dart';
+import 'record.dart';
 
 void main() => runApp(MyApp());
 
@@ -35,11 +36,18 @@ class _MyAppState extends State<MyApp> {
         primarySwatch: Colors.lightGreen,
         textTheme: TextTheme(
           headline1: TextStyle(fontSize: 70, fontWeight: FontWeight.bold),
+          headline2: TextStyle(
+              fontSize: 30, fontWeight: FontWeight.bold, color: Colors.white),
           headline3: TextStyle(fontSize: 40, fontWeight: FontWeight.bold,color: Colors.white),
           bodyText1: TextStyle(
             fontFamily: 'Consola',
             fontSize: 25,
             color: Colors.lightGreen,
+          ),
+          bodyText2: TextStyle(
+            fontFamily: 'Consola',
+            fontSize: 15,
+            color: Colors.white,
           ),
         ),
       ),
@@ -94,7 +102,7 @@ class HomePage extends StatelessWidget {
                     child: NavigateTo(AudioMap(), "listen"),
                   ),
                   Container(
-                    child: NavigateTo(AudioRecorder(), "record"),
+                    child: NavigateTo(Recorder(), "record"),
                   ),
                   Container(
                     child: NavigateTo(Website(), "calendar"),
