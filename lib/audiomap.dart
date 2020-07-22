@@ -1,3 +1,4 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:lisboasoa2020/buttons.dart';
@@ -7,7 +8,15 @@ import 'package:location/location.dart';
 import 'dart:async';
 import 'website.dart';
 
-import 'audioPlayer.dart';
+
+import 'package:firebase_storage/firebase_storage.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:permission_handler/permission_handler.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:audioplayers/audio_cache.dart';
+import 'package:audioplayers/audioplayers.dart';
+
+//import 'audioPlayer.dart';
 import 'GoogleMaps/mapEventPage.dart';
 
 const double CAMERA_ZOOM = 16;
@@ -29,6 +38,10 @@ class _MapState extends State<AudioMap> {
   BitmapDescriptor lisboaSoaMarker;
 
   bool eventOverlay;
+
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  final dbRef = FirebaseDatabase.instance.reference().child("LocationAudio");
 
   Timer _everySecond;
 
@@ -53,6 +66,7 @@ class _MapState extends State<AudioMap> {
     });
     setSourceAndDestinationIcons();
     setInitialLocation();
+    
   }
 
   void setSourceAndDestinationIcons() async {
@@ -71,10 +85,16 @@ class _MapState extends State<AudioMap> {
         .then((value) {
       return value;
     });
-    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
+
+
+
+
+    /*addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
         "Sound");
     addMarkers("Event", LatLng(38.720586, -9.136905), "LisboaSoa",
         "Event", "Event");
+
+     */
   }
 
   void setInitialLocation() async {
@@ -96,9 +116,13 @@ class _MapState extends State<AudioMap> {
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);
     }
+
+
+
     return Scaffold(
       appBar: AppBar(),
-      body: Stack(
+      body:
+        Stack(
         children: <Widget>[
           GoogleMap(
               myLocationEnabled: true,
@@ -115,6 +139,7 @@ class _MapState extends State<AudioMap> {
               }),
           eventPage(),
         ],
+
       ),
     );
   }
