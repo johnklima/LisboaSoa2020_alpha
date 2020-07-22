@@ -52,7 +52,18 @@
 	</dict>
 	<key>NSAppleMusicUsageDescription</key>
 	<string>We would like to play back audio</string>
+	
+
+        <key>NSLocationWhenInUseUsageDescription</key>
+        <string>This app needs access to location in the background.</string>    
+        <key>NSLocationAlwaysUsageDescription</key>
+        <string>This app needs access to location when in the background.</string>
+        <key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+        <string>This app needs access to location when open and in the background.</string>
+
 	<key>EnableBackgroundLocationUpdates</key>
 	<true/>
+
+
 </dict>
 </plist>
