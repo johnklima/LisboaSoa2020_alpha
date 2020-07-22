@@ -17,6 +17,7 @@ import 'videoplayer.dart';
 import 'firebaseaudio.dart';
 import 'website.dart';
 import 'map.dart';
+import 'audiomap.dart';
 
 void main() => runApp(MyApp());
 
@@ -90,7 +91,7 @@ class HomePage extends StatelessWidget {
                   Container(
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child: NavigateTo(AudioPlayer(), "listen"),
+                    child: NavigateTo(AudioMap(), "listen"),
                   ),
                   Container(
                     child: NavigateTo(AudioRecorder(), "record"),

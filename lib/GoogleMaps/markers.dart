@@ -29,7 +29,7 @@ class StaticMarkers {
     ),
 
     Marker(
-      markerId: MarkerId("Even is over"),
+      markerId: MarkerId("Event is over"),
       position: const LatLng(38.720586, -9.138905),
       icon: BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueRed),
       infoWindow: InfoWindow(
