@@ -60,8 +60,8 @@ class _RecorderState extends State<Recorder> {
                     Center(
                       /// The audio player
                       child: Container(
-                        height: 140,
-                        width: 275,
+                        height: 120,
+                        width: 250,
                         child: Image(
                           image: AssetImage(
                               "assets/Graphic/LisboaSoa_Graphic_AudioPlayer.png"),
@@ -72,8 +72,9 @@ class _RecorderState extends State<Recorder> {
                     /// This is both fans on the audio payer
                     Center(
                       child: Container(
-                        height: 140,
-                        width: 275,
+                        /// Has to be the same as the audio player height & width
+                        height: 120,
+                        width: 250,
                         child: Row(
                           children: <Widget>[
                             Expanded(
@@ -81,8 +82,8 @@ class _RecorderState extends State<Recorder> {
                               child: Container(
                                 alignment: Alignment(-0.17, -0.05),
                                 child: Container(
-                                  height: 50,
-                                  width: 50,
+                                  height: 45,
+                                  width: 45,
                                   child: Image(
                                     image: AssetImage(
                                         "assets/Graphic/LisboaSoa_Graphic_AudioPlayer_LeftFan.png"),
@@ -95,8 +96,8 @@ class _RecorderState extends State<Recorder> {
                               child: Container(
                                 alignment: Alignment(0.17, -0.05),
                                 child: Container(
-                                  height: 50,
-                                  width: 50,
+                                  height: 45,
+                                  width: 45,
                                   child: Image(
                                     image: AssetImage(
                                         "assets/Graphic/LisboaSoa_Graphic_AudioPlayer_RightFan.png"),
@@ -109,6 +110,9 @@ class _RecorderState extends State<Recorder> {
                       ),
                     ),
                   ],
+                ),
+                Container(
+
                 ),
                 Column(
                   children: <Widget>[
@@ -131,137 +135,32 @@ class _RecorderState extends State<Recorder> {
                     ),
                   ],
                 ),
+                /// The buttons on the bottom.
+                /// The widget for these can be found in
+                /// buttons.dart
                 Expanded(
-                  child: Align(
-                    child: Container(
-                      margin: EdgeInsets.fromLTRB(15, 15, 15, 15),
-                      child: ButtonTheme(
-                        minWidth: 200,
-                        height: 50,
-                        child: RaisedButton(
-                          color: Colors.white,
-                          child: Text(
-                            "record",
-                            style: Theme.of(context).textTheme.bodyText1,
-                          ),
-                          textColor: Colors.lightGreen,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(12.0),
-                          ),
-                          onPressed: () {
-                          },
+                  child: Container(
+                    margin: EdgeInsets.all(5),
+                    child: Column(
+                      children: <Widget>[
+                        RecorderButton(
+                            "record", 'assets/Icons/LisboaSoa_Icon_Record.png'
                         ),
-                      ),
+
+                        RecorderButton(
+                            "stop", 'assets/Icons/LisboaSoa_Icon_Stop.png'
+                        ),
+                        RecorderButton(
+                            "play", 'assets/Icons/LisboaSoa_Icon_Play.png'
+                        ),
+                        RecorderButton(
+                            "save", 'assets/Icons/LisboaSoa_Icon_Save.png'
+                        ),
+                      ],
                     ),
                   ),
                 ),
-                        Expanded(
-                          child: Align(
-                            child: Container(
-                              height: 50,
-                              width: 200,
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/Icons/LisboaSoa_Icon_Stop.png"),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment(-0.3, 0),
-                                      child: Text(
-                                        "stop",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            child: Container(
-                              height: 50,
-                              width: 200,
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/Icons/LisboaSoa_Icon_Play.png"),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment(-0.3, 0),
-                                      child: Text(
-                                        "play",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Align(
-                            child: Container(
-                              height: 50,
-                              width: 200,
-                              margin: EdgeInsets.all(5),
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                              child: Row(
-                                children: <Widget>[
-                                  Container(
-                                    margin: EdgeInsets.all(10),
-                                    child: Image(
-                                      image: AssetImage(
-                                          "assets/Icons/LisboaSoa_Icon_Save.png"),
-                                    ),
-                                  ),
-                                  Expanded(
-                                    child: Align(
-                                      alignment: Alignment(-0.3, 0),
-                                      child: Text(
-                                        "save",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .bodyText1,
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-
+              ],
             ),
           ),
         ],

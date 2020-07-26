@@ -45,43 +45,58 @@ class NavigateTo extends StatelessWidget {
 class RecorderButton extends StatelessWidget {
   @override
 
-  String assetImgDir;
-  String buttonText;
+  final assetImgDir;
+  final buttonText;
 
   RecorderButton(this.buttonText, this.assetImgDir);
 
   Widget build(BuildContext context) {
-    return Expanded(
+    return                 Expanded(
       child: Align(
         child: Container(
-          height: 50,
-          width: 200,
-          margin: EdgeInsets.all(5),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(12),
-          ),
-          child: Row(
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.all(10),
-                child: Image(
-                  image: AssetImage(
-                      assetImgDir),
+          margin: EdgeInsets.fromLTRB(15, 5, 15, 5),
+          child: ButtonTheme(
+            minWidth: 150,
+            height: 50,
+            child: RaisedButton(
+              color: Colors.white,
+              child: Container(
+                height: 40,
+                width: 175,
+                child: Row(
+                  children: <Widget>[
+                     Container(
+                       margin: EdgeInsets.all(10),
+                       child : Align(
+                        alignment: Alignment.centerLeft,
+                        child: Image(
+
+                          image: AssetImage(
+                              assetImgDir),
+                        ),
+                      ),
+                     ),
+
+                    Expanded(
+                      child: Align(
+                        alignment: Alignment(-0.3, 0),
+                        child: Text(
+                          buttonText,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyText1,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment(-0.3, 0),
-                  child: Text(
-                    buttonText,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyText1,
-                  ),
-                ),
+              textColor: Colors.lightGreen,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(12.0),
               ),
-            ],
+              onPressed: () {},
+            ),
           ),
         ),
       ),
