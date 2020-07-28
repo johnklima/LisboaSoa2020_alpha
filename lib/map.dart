@@ -17,22 +17,19 @@ const LatLng SOURCE_LOCATION = LatLng(38.720586, -9.134905);
 
 class TheMap extends StatefulWidget {
   @override
-  State<StatefulWidget> createState() => _MapState(false);
+  State<StatefulWidget> createState() => _MapState();
 }
 
 class _MapState extends State<TheMap> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = Set<Marker>();
 
-  //Custom markers
+  ///Custom markers
   BitmapDescriptor listenMarker;
   BitmapDescriptor lisboaSoaMarker;
 
-  bool eventOverlay;
+  var eventOverlay;
 
-  Timer _everySecond;
-
-  _MapState(this.eventOverlay);
   //Current user location
   LocationData currentLocation;
 
@@ -56,7 +53,8 @@ class _MapState extends State<TheMap> {
   }
 
   void setSourceAndDestinationIcons() async {
-    print("Should Place the markers Should Place the markers Should Place the markers Should Place the markers Should Place the markers ");
+    print(
+        "Should Place the markers Should Place the markers Should Place the markers Should Place the markers Should Place the markers ");
     listenMarker = await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(devicePixelRatio: 25),
             'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
@@ -71,10 +69,10 @@ class _MapState extends State<TheMap> {
         .then((value) {
       return value;
     });
-    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
-        "Sound");
-    addMarkers("Event", LatLng(38.720586, -9.136905), "LisboaSoa",
-        "Event", "Event");
+    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen",
+        "Listen to this sound", "Sound");
+    addMarkers(
+        "Event", LatLng(38.720586, -9.136905), "LisboaSoa", "Event", "Event");
   }
 
   void setInitialLocation() async {
@@ -113,7 +111,13 @@ class _MapState extends State<TheMap> {
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          eventPage(),
+          Text((() {
+            if (eventOverlay != null  && eventOverlay) {
+              return "tis true";
+            }
+            return "anything but true";
+          })()),
+          TheEventPage(eventOverlay , this),
         ],
       ),
     );
@@ -140,7 +144,6 @@ class _MapState extends State<TheMap> {
     // every time the location changes, so the camera
     // follows the pin as it moves with an animation
 
-
     // do this inside the setState() so Flutter gets notified
     // that a widget update is due
     setState(() {
@@ -149,6 +152,7 @@ class _MapState extends State<TheMap> {
           LatLng(currentLocation.latitude, currentLocation.longitude);
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
+
       _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
       _markers.add(
         Marker(
@@ -163,7 +167,8 @@ class _MapState extends State<TheMap> {
     });
   }
 
-  void addMarkers (
+  /// The map marker types
+  void addMarkers(
       String markerID, LatLng pos, String type, String Title, String Snippet) {
     if (type == "Listen") {
       _markers.add(
@@ -184,173 +189,199 @@ class _MapState extends State<TheMap> {
           position: pos,
           icon: lisboaSoaMarker, //Should be controlled by the type
           onTap: () {
-            eventOverlay = true;
+            print("Pushed the map button");
+            setState(() {
+              eventOverlay = true;
+            });
           },
         ),
       );
     }
   }
 
-  Widget eventPage() {
-    if (eventOverlay) {
-      return new Stack(
-        children: <Widget>[
-          Container(
-            width: double.infinity,
-            height: double.infinity,
-            color: Colors.black38,
-          ),
-          Center(
-            child: Container(
-              width: 300,
-              height: 300,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(
-                color: const Color(0xff7c94b6),
-                image: const DecorationImage(
-                    image: AssetImage("assets/Graphic/LisboaSoa_Background.png"),
-                fit: BoxFit.cover,),
-                border: Border.all(
-                  color: Colors.white60,
-                  width: 8,
-                ),
-                borderRadius: BorderRadius.circular(12),
+  void backButton() {
+    setState(() {
+      eventOverlay = false;
+    });
+  }
+
+  void eventWebPage()  {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => EventPage()),
+    );
+  }
+}
+
+class TheEventPage extends StatelessWidget {
+
+  final active;
+  final mapState;
+
+
+  TheEventPage(this.active, this.mapState);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child:((() {
+        if (active != null  && active) {
+          return Stack(
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: double.infinity,
+                color: Colors.black38,
               ),
-              child: Column(
-                children: <Widget>[
-                  Container(
-                    width: 300,
-                    height: 200,
-                    margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
-                    child: Column(
-                      children: <Widget>[
-                        Container(
-                            width: double.infinity,
-                            height: 50,
-                            margin: EdgeInsets.all(5),
-                          child: Center(
-                            child: Container(
-                              child: Text("The Band",
-                                style: Theme.of(context).textTheme.headline3,
-                              ),
-
-                            ),
-                          ),
-                          ),
-                        Container(
-                          width: double.infinity,
-                          height: 130,
-
-                          margin: EdgeInsets.all(5),
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
-                                child: Container(
-                                  color: Colors.white30,
-                                  child: Container(
-                                    margin: EdgeInsets.all(5),
-                                    child: Text(
-                                      "Info info info info info info"
-                                          " info info info info info"
-                                          " info info info info info"
-                                          " info info info info info",
-                                      style: Theme.of(context).textTheme.bodyText2,
-                                    ),
-                                  ),
-                                ),
-
-                              ),
-                              Container(
-                                width: 5,
-                              ),
-                              Expanded(
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    color: const Color(0xff7c94b6),
-                                    image: const DecorationImage(
-                                      image: AssetImage("assets/ListenToThis_Placeholder.png"),
-                                      fit: BoxFit.cover,),
-                                    border: Border.all(
-                                      color: Colors.white60,
-                                      width: 2,
-                                    ),
-
-                                    borderRadius: BorderRadius.circular(12),
-                                  ),),
-                              ),
-                            ],
-                          ),
-                        ),
-
-                      ],
+              Center(
+                child: Container(
+                  width: 300,
+                  height: 300,
+                  alignment: Alignment.center,
+                  decoration: BoxDecoration(
+                    color: const Color(0xff7c94b6),
+                    image: const DecorationImage(
+                      image: AssetImage("assets/Graphic/LisboaSoa_Background.png"),
+                      fit: BoxFit.cover,
                     ),
+                    border: Border.all(
+                      color: Colors.white60,
+                      width: 8,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
                   ),
-                    Expanded(
-                      child: Container(
-                      width: double.infinity,
-                      height: double.infinity,
-                        child: Center(
-                          child: Row(
-                            children: <Widget>[
-                              Expanded(
+
+                  /// This is the event page, should be moved into a separate
+                  /// .dart file, and just called in from there.
+                  child: Column(
+                    children: <Widget>[
+                      Container(
+                        width: 300,
+                        height: 200,
+                        margin: EdgeInsets.fromLTRB(20, 20, 20, 0),
+                        child: Column(
+                          children: <Widget>[
+                            Container(
+                              width: double.infinity,
+                              height: 50,
+                              margin: EdgeInsets.all(5),
+                              child: Center(
                                 child: Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: RaisedButton(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "Back",
-                                      style: Theme.of(context).textTheme.bodyText1,
-                                    ),
-                                    textColor: Colors.lightGreen,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
-                                    ),
-                                    onPressed: () { backButton();
-                                    },
+                                  child: Text(
+                                    "The Band",
+                                    style: Theme.of(context).textTheme.headline3,
                                   ),
                                 ),
                               ),
-                              Expanded(
-                                child: Container(
-                                  margin: EdgeInsets.all(10),
-                                  child: RaisedButton(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "More",
-                                      style: Theme.of(context).textTheme.bodyText1,
+                            ),
+                            Container(
+                              width: double.infinity,
+                              height: 130,
+                              margin: EdgeInsets.all(5),
+                              child: Row(
+                                children: <Widget>[
+                                  Expanded(
+                                    child: Container(
+                                      color: Colors.white30,
+                                      child: Container(
+                                        margin: EdgeInsets.all(5),
+                                        child: Text(
+                                          "Info info info info info info"
+                                              " info info info info info"
+                                              " info info info info info"
+                                              " info info info info info",
+                                          style:
+                                          Theme.of(context).textTheme.bodyText2,
+                                        ),
+                                      ),
                                     ),
-                                    textColor: Colors.lightGreen,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(25.0),
+                                  ),
+                                  Container(
+                                    width: 5,
+                                  ),
+                                  Expanded(
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        color: const Color(0xff7c94b6),
+                                        image: const DecorationImage(
+                                          image: AssetImage(
+                                              "assets/ListenToThis_Placeholder.png"),
+                                          fit: BoxFit.cover,
+                                        ),
+                                        border: Border.all(
+                                          color: Colors.white60,
+                                          width: 2,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12),
+                                      ),
                                     ),
-                                    onPressed: () {
-                                      eventWebPage();
-                                    },
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          width: double.infinity,
+                          height: double.infinity,
+                          child: Center(
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: RaisedButton(
+                                      color: Colors.white,
+                                      child: Text(
+                                        "Back",
+                                        style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                      textColor: Colors.lightGreen,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25.0),
+                                      ),
+                                      onPressed: () {
+                                        mapState.backButton();
+                                      },
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
+                                Expanded(
+                                  child: Container(
+                                    margin: EdgeInsets.all(10),
+                                    child: RaisedButton(
+                                      color: Colors.white,
+                                      child: Text(
+                                        "More",
+                                        style:
+                                        Theme.of(context).textTheme.bodyText1,
+                                      ),
+                                      textColor: Colors.lightGreen,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(25.0),
+                                      ),
+                                      onPressed: () {
+                                        mapState.eventWebPage();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                ],
+                    ],
+                  ),
+                ),
               ),
-            ),
-          ),
-        ],
-      );
-    } else {
-      return new Container();
-    }
+            ],
+          );
+        }
+        return Container();
+      })()),);
   }
-   void backButton() async {
-     eventOverlay = false;
-   }
-   void eventWebPage() async {
-     Navigator.push(
-       context,
-       MaterialPageRoute(builder: (context) => EventPage()),
-     );
-   }
 }
