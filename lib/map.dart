@@ -9,6 +9,7 @@ import 'website.dart';
 
 import 'audioPlayer.dart';
 import 'GoogleMaps/mapEventPage.dart';
+import "GoogleMaps/MapDesign.dart";
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 40;
@@ -57,14 +58,14 @@ class _MapState extends State<TheMap> {
         "Should Place the markers Should Place the markers Should Place the markers Should Place the markers Should Place the markers ");
     listenMarker = await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(devicePixelRatio: 25),
-            'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
+            'assets/MapMarkers/LisboaSoa_ListenMarker_Medium.png')
         .then((onValue) {
       return onValue;
     });
 
     lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
             ImageConfiguration(devicePixelRatio: 25),
-            'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
+            'assets/MapMarkers/LisboaSoa_SoaMarker_Medium.png')
         // ignore: missing_return
         .then((value) {
       return value;
@@ -106,17 +107,12 @@ class _MapState extends State<TheMap> {
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
               onMapCreated: (GoogleMapController controller) {
+                controller.setMapStyle(Utils.mapStyles);
                 _controller.complete(controller);
                 // my map has completed being created;
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          Text((() {
-            if (eventOverlay != null  && eventOverlay) {
-              return "tis true";
-            }
-            return "anything but true";
-          })()),
           TheEventPage(eventOverlay , this),
         ],
       ),
@@ -385,3 +381,4 @@ class TheEventPage extends StatelessWidget {
       })()),);
   }
 }
+
