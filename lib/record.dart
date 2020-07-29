@@ -4,7 +4,6 @@ import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:geolocator/geolocator.dart';
@@ -22,8 +21,11 @@ class _RecorderState extends State<Recorder> {
   FlutterAudioRecorder _recorder;
   Recording _current;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
+  AudioPlayer audioPlayer = AudioPlayer();
+
 
   var DocDir;
+  var isPlaying = true;
 
   // variables stored for sending to the json on save.
   String guid;
@@ -35,6 +37,7 @@ class _RecorderState extends State<Recorder> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    print("Hello");
     _init();
   }
 
@@ -108,28 +111,32 @@ class _RecorderState extends State<Recorder> {
                             Expanded(
                               /// The left fan on the audio player
                               child: Container(
-                                alignment: Alignment(-0.17, -0.05),
+                                alignment: Alignment(-0.17, -0.0),
+                                width: double.infinity,
+                                height: double.infinity,
                                 child: Container(
-                                  height: 45,
-                                  width: 45,
-                                  child: Image(
+                                  height: 50,
+                                  width: 50,
+                                  child: ImageRotate("assets/Graphic/LisboaSoa_Graphic_AudioPlayer_LeftFan_2.png", isPlaying),
+                                  /*Image(
                                     image: AssetImage(
                                         "assets/Graphic/LisboaSoa_Graphic_AudioPlayer_LeftFan.png"),
                                   ),
+                                   */
                                 ),
                               ),
                             ),
                             Expanded(
                               /// The right fan on the audio player
                               child: Container(
-                                alignment: Alignment(0.17, -0.05),
+                                alignment: Alignment(0.17, -0.0),
+                                width: double.infinity,
+                                height: double.infinity,
                                 child: Container(
-                                  height: 45,
-                                  width: 45,
-                                  child: Image(
-                                    image: AssetImage(
-                                        "assets/Graphic/LisboaSoa_Graphic_AudioPlayer_RightFan.png"),
-                                  ),
+                                  height: 50,
+                                  width: 50,
+                                  child:
+                                  ImageRotate("assets/Graphic/LisboaSoa_Graphic_AudioPlayer_LeftFan_2.png", isPlaying),
                                 ),
                               ),
                             ),
@@ -352,13 +359,27 @@ class _RecorderState extends State<Recorder> {
       _currentStatus = _current.status;
       dur = _current?.duration.toString();
     });
+
+    if (audioPlayer.state == AudioPlayerState.PLAYING){
+      audioPlayer.stop();
+      setState(() {
+        isPlaying = false;
+      });
+    }
+
   }
 
   //Play the recorder audio.
   //This is what we should use in the audio lib I suppose.
   void onPlayAudio() async {
-    AudioPlayer audioPlayer = AudioPlayer();
+    setState(() {
+      isPlaying = true;
+    });
+    if (audioPlayer.state == AudioPlayerState.PLAYING){
+      audioPlayer.stop();
+    }
     await audioPlayer.play(_current.path, isLocal: true);
+
   }
 
   //Save function, currently only stores the info in the json file.

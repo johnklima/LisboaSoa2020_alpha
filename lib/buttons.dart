@@ -107,18 +107,58 @@ class RecorderButton extends StatelessWidget {
   }
 }
 
+class ImageRotate extends StatefulWidget {
 
-/// This is the correct way to go back to the previous page
-/// but it's not working when having the widget in here for
-/// some reason.
-class NavigateBack extends StatelessWidget {
+  final imageLoc;
+  final isPlaying;
+
+  ImageRotate(this.imageLoc,this.isPlaying);
+
+  @override
+  _ImageRotateState createState() => new _ImageRotateState(imageLoc,isPlaying);
+}
+
+class _ImageRotateState extends State<ImageRotate>
+    with SingleTickerProviderStateMixin {
+  AnimationController animationController;
+
+  final imageLoc;
+  final isPlaying;
+
+  _ImageRotateState(this.imageLoc, this.isPlaying);
+
+  @override
+  void initState() {
+    super.initState();
+    animationController = new AnimationController(
+      vsync: this,
+      duration: new Duration(seconds: 7),
+    );
+    if(isPlaying != null && isPlaying){
+      animationController.repeat();
+    }
+    else{
+      animationController.stop();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: RaisedButton(
-        child: Text("Go Back"),
-        onPressed: () {
-          Navigator.pop(context);
+    return new Container(
+      alignment: Alignment.center,
+
+      child: new AnimatedBuilder(
+        animation: animationController,
+        child: new Container(
+          height: 150.0,
+          width: 150.0,
+          child: new Image.asset(imageLoc),
+        ),
+        builder: (BuildContext context, Widget _widget) {
+          return new Transform.rotate(
+            angle: animationController.value * 6.3,
+            child: _widget,
+          );
         },
       ),
     );
