@@ -11,17 +11,25 @@ import 'audioPlayer.dart';
 import 'GoogleMaps/mapEventPage.dart';
 import "GoogleMaps/MapDesign.dart";
 
-const double CAMERA_ZOOM = 16;
+const double CAMERA_ZOOM = 15;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
 const LatLng SOURCE_LOCATION = LatLng(38.720586, -9.134905);
+var listen;
 
 class TheMap extends StatefulWidget {
+
+  final lis;
+  TheMap(this.lis);
+
   @override
-  State<StatefulWidget> createState() => _MapState();
+  State<StatefulWidget> createState() {
+    listen = lis;
+   return MapState();
+  }
 }
 
-class _MapState extends State<TheMap> {
+class MapState extends State<TheMap> {
   Completer<GoogleMapController> _controller = Completer();
   Set<Marker> _markers = Set<Marker>();
 
@@ -42,7 +50,7 @@ class _MapState extends State<TheMap> {
   @override
   void initState() {
     super.initState();
-
+    print(listen);
     location = new Location();
 
     location.onLocationChanged.listen((LocationData cLoc) {
@@ -107,7 +115,13 @@ class _MapState extends State<TheMap> {
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
               onMapCreated: (GoogleMapController controller) {
-                controller.setMapStyle(Utils.mapStyles);
+                if (listen){
+                  controller.setMapStyle(UtilsYellow.mapStyles);
+                }
+                else{
+                  controller.setMapStyle(UtilsBlue.mapStyles);
+                }
+
                 _controller.complete(controller);
                 // my map has completed being created;
                 // i'm ready to show the pins on the map
@@ -166,7 +180,7 @@ class _MapState extends State<TheMap> {
   /// The map marker types
   void addMarkers(
       String markerID, LatLng pos, String type, String Title, String Snippet) {
-    if (type == "Listen") {
+    if (listen) {
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
@@ -178,7 +192,7 @@ class _MapState extends State<TheMap> {
           ),
         ),
       );
-    } else if (type == "LisboaSoa") {
+    } else {
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
@@ -213,7 +227,6 @@ class TheEventPage extends StatelessWidget {
 
   final active;
   final mapState;
-
 
   TheEventPage(this.active, this.mapState);
 

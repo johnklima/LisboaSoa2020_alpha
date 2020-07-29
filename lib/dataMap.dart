@@ -72,7 +72,6 @@ class _MapState extends State<Map> {
           children: <Widget>[
             GoogleMap(
               onMapCreated: _onMapCreated,
-              markers: StaticMarkers().markers,
               //mapType: MapType.normal,
               initialCameraPosition: CameraPosition(target: _center, zoom: 15),
             ),

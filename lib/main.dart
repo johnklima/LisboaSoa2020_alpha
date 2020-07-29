@@ -20,7 +20,13 @@ import 'map.dart';
 import 'audiomap.dart';
 import 'record.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
+      .then((_) {
+    runApp(new MyApp());
+  });
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -99,7 +105,7 @@ class HomePage extends StatelessWidget {
                   Container(
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child: NavigateTo(AudioMap(), "listen"),
+                    child: NavigateTo(TheMap(true), "listen"),
                   ),
                   Container(
                     child: NavigateTo(Recorder(), "record"),
@@ -108,7 +114,7 @@ class HomePage extends StatelessWidget {
                     child: NavigateTo(Website(), "calendar"),
                   ),
                   Container(
-                    child: NavigateTo(TheMap(), "see"),
+                    child: NavigateTo(TheMap(false), "see"),
                   ),
                 ],
               ),
