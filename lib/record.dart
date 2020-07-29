@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 import 'buttons.dart';
+import 'recorder.dart';
 
 class Recorder extends StatefulWidget {
   @override
@@ -10,6 +11,9 @@ class Recorder extends StatefulWidget {
 }
 
 class _RecorderState extends State<Recorder> {
+
+  final recorder = new ExampleRecorder();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -144,17 +148,17 @@ class _RecorderState extends State<Recorder> {
                     child: Column(
                       children: <Widget>[
                         RecorderButton(
-                            "record", 'assets/Icons/LisboaSoa_Icon_Record.png'
+                            "record", 'assets/Icons/LisboaSoa_Icon_Record.png', this
                         ),
 
                         RecorderButton(
-                            "stop", 'assets/Icons/LisboaSoa_Icon_Stop.png'
+                            "stop", 'assets/Icons/LisboaSoa_Icon_Stop.png', this
                         ),
                         RecorderButton(
-                            "play", 'assets/Icons/LisboaSoa_Icon_Play.png'
+                            "play", 'assets/Icons/LisboaSoa_Icon_Play.png', this
                         ),
                         RecorderButton(
-                            "save", 'assets/Icons/LisboaSoa_Icon_Save.png'
+                            "save", 'assets/Icons/LisboaSoa_Icon_Save.png', this
                         ),
                       ],
                     ),
@@ -166,5 +170,18 @@ class _RecorderState extends State<Recorder> {
         ],
       ),
     );
+  }
+
+  void theOnPress(String st){
+    if (st == "record"){
+      print(st);
+      
+    } else if (st == "stop"){
+      print(st);
+    } else if (st == "play"){
+      print(st);
+    } else if (st == "save"){
+      print(st);
+    }
   }
 }

@@ -47,8 +47,9 @@ class RecorderButton extends StatelessWidget {
 
   final assetImgDir;
   final buttonText;
+  final buttonClass;
 
-  RecorderButton(this.buttonText, this.assetImgDir);
+  RecorderButton(this.buttonText, this.assetImgDir,this.buttonClass);
 
   Widget build(BuildContext context) {
     return                 Expanded(
@@ -95,7 +96,9 @@ class RecorderButton extends StatelessWidget {
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(12.0),
               ),
-              onPressed: () {},
+              onPressed: () {
+                buttonClass.theOnPress(buttonText);
+              },
             ),
           ),
         ),
