@@ -126,9 +126,10 @@ class MapState extends State<TheMap> {
       documentList.forEach((DocumentSnapshot document) {
         GeoPoint pos = document.data['position']['geopoint'];
         String name = document.data['name'];
+        String type = document.data['Type'];
 
         //need to sort which marker i suppose
-        addMarkers("Listen", LatLng(pos.latitude, pos.longitude), "Listen", name,
+        addMarkers("Listen", LatLng(pos.latitude, pos.longitude), type, name,
             "Sound");
       });
 
