@@ -29,7 +29,7 @@ class TheMap extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     listen = lis;
-   return MapState();
+   return new MapState();
   }
 }
 
@@ -249,7 +249,7 @@ class MapState extends State<TheMap> {
           ),
         ),
       );
-    } else if (type == "Event") {
+    } else if (!listen && type == "Event") {
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
