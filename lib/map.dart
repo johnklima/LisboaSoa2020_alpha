@@ -236,7 +236,7 @@ class MapState extends State<TheMap> {
 
     print("ADD MARKER");
 
-    if (listen) {
+    if (listen && type == "Listen") {
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
@@ -248,7 +248,7 @@ class MapState extends State<TheMap> {
           ),
         ),
       );
-    } else {
+    } else if (type == "Event") {
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
