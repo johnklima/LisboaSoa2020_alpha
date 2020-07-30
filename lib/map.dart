@@ -6,6 +6,10 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'dart:async';
 import 'website.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import 'audioPlayer.dart';
 import 'GoogleMaps/mapEventPage.dart';
@@ -36,6 +40,10 @@ class MapState extends State<TheMap> {
   ///Custom markers
   BitmapDescriptor listenMarker;
   BitmapDescriptor lisboaSoaMarker;
+
+ //gimme firestore
+  Firestore firestore = Firestore.instance;
+  Geoflutterfire geo = Geoflutterfire();
 
   var eventOverlay;
 
@@ -78,10 +86,55 @@ class MapState extends State<TheMap> {
         .then((value) {
       return value;
     });
-    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen",
-        "Listen to this sound", "Sound");
-    addMarkers(
-        "Event", LatLng(38.720586, -9.136905), "LisboaSoa", "Event", "Event");
+
+    /*
+    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
+        "Sound");
+    addMarkers("Event", LatLng(38.720586, -9.136905), "LisboaSoa",
+        "Event", "Event");
+    */
+
+    //<JPK> just hacking around here to try to make connection to database
+    //below adds to the db
+    /*
+    GeoFirePoint listenLoc = geo.point(latitude: 38.720586, longitude: -9.134905);
+    GeoFirePoint eventLoc = geo.point(latitude: 38.720586, longitude:  -9.136905);
+    firestore
+        .collection('LocationAudio')
+        .add({'name': 'listen name', 'position': listenLoc.data});
+
+    firestore
+        .collection('LocationAudio')
+        .add({'name': 'event name', 'position': eventLoc.data});
+    */
+
+    //code below reads from the db, and makes new markers?
+    // Create a geoFirePoint for our current location (hacked for now)
+    GeoFirePoint center = geo.point(latitude: 38.720586, longitude: -9.134905);
+
+// get the collection reference or query
+    var collectionReference = firestore.collection('LocationAudio');
+
+    double radius = 500;
+    String field = 'position';
+
+    Stream<List<DocumentSnapshot>> stream = geo.collection(collectionRef: collectionReference)
+        .within(center: center, radius: radius, field: field);
+
+    stream.listen((List<DocumentSnapshot> documentList) {
+      //add the markers
+      documentList.forEach((DocumentSnapshot document) {
+        GeoPoint pos = document.data['position']['geopoint'];
+        String name = document.data['name'];
+
+        //need to sort which marker i suppose
+        addMarkers("Listen", LatLng(pos.latitude, pos.longitude), "Listen", name,
+            "Sound");
+      });
+
+
+    });
+
   }
 
   void setInitialLocation() async {
@@ -180,6 +233,9 @@ class MapState extends State<TheMap> {
   /// The map marker types
   void addMarkers(
       String markerID, LatLng pos, String type, String Title, String Snippet) {
+
+    print("ADD MARKER");
+
     if (listen) {
       _markers.add(
         Marker(
