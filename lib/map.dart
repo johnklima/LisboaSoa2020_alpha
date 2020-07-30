@@ -46,7 +46,7 @@ class MapState extends State<TheMap> {
   Geoflutterfire geo = Geoflutterfire();
 
   var eventOverlay;
-
+  var eventName;
   //Current user location
   LocationData currentLocation;
 
@@ -181,7 +181,7 @@ class MapState extends State<TheMap> {
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          TheEventPage(eventOverlay , this),
+          TheEventPage(eventOverlay, this, eventName),
         ],
       ),
     );
@@ -258,6 +258,7 @@ class MapState extends State<TheMap> {
           onTap: () {
             print("Pushed the map button");
             setState(() {
+              eventName = Title;
               eventOverlay = true;
             });
           },
@@ -284,8 +285,10 @@ class TheEventPage extends StatelessWidget {
 
   final active;
   final mapState;
+  final eventName;
+  
 
-  TheEventPage(this.active, this.mapState);
+  TheEventPage(this.active, this.mapState, this.eventName);
 
   @override
   Widget build(BuildContext context) {
@@ -334,7 +337,7 @@ class TheEventPage extends StatelessWidget {
                               child: Center(
                                 child: Container(
                                   child: Text(
-                                    "The Band",
+                                    eventName,
                                     style: Theme.of(context).textTheme.headline3,
                                   ),
                                 ),
@@ -352,10 +355,7 @@ class TheEventPage extends StatelessWidget {
                                       child: Container(
                                         margin: EdgeInsets.all(5),
                                         child: Text(
-                                          "Info info info info info info"
-                                              " info info info info info"
-                                              " info info info info info"
-                                              " info info info info info",
+                                          "A small summary about the artist in here...",
                                           style:
                                           Theme.of(context).textTheme.bodyText2,
                                         ),
@@ -370,8 +370,7 @@ class TheEventPage extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: const Color(0xff7c94b6),
                                         image: const DecorationImage(
-                                          image: AssetImage(
-                                              "assets/ListenToThis_Placeholder.png"),
+                                          image: NetworkImage('https://static.noroff.no/cms/ansatte/krs/john-klima.jpg'),
                                           fit: BoxFit.cover,
                                         ),
                                         border: Border.all(
