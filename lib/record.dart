@@ -9,6 +9,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:flutter_guid/flutter_guid.dart';
 
+import 'package:firebase_storage/firebase_storage.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:geoflutterfire/geoflutterfire.dart';
+import 'package:file_picker/file_picker.dart';
+
 import 'buttons.dart';
 import 'audioFiles.dart';
 
@@ -22,6 +27,11 @@ class _RecorderState extends State<Recorder> {
   Recording _current;
   RecordingStatus _currentStatus = RecordingStatus.Unset;
   AudioPlayer audioPlayer = AudioPlayer();
+
+//FireStore
+  Firestore firestore = Firestore.instance;
+  Geoflutterfire geo = Geoflutterfire();
+
 
 
   var DocDir;
@@ -386,9 +396,40 @@ class _RecorderState extends State<Recorder> {
   //I haven't really found the json file yet so I am not sure if it works,
   //or if this is the correct way to send it to the json.
   void saveToJson() {
-    AudioFiles audioFiles = AudioFiles(guid, pos.toString(), dur, loc);
-    print(audioFiles.toJson());
+
+    //var collectionReference = firestore.collection('LocationAudio');
+
+    GeoFirePoint position = geo.point(latitude: pos.latitude, longitude: pos.longitude);
+
+
+    firestore
+        .collection('LocationAudio')
+        .add({'name': 'from recorder', 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': 'Philly4.m4a'});
+
+
+    //AudioFiles audioFiles = AudioFiles(guid, pos.toString(), dur, loc);
+    //print(audioFiles.toJson());
   }
+
+  /// work in progress file upload.
+  /*
+    Future uploadFile() async {
+
+      File file = await FilePicker.ge
+
+
+
+      StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child('chats/${Path.basename(_current.path)}}');
+    StorageUploadTask uploadTask = storageReference.putFile(_curr ent);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    storageReference.getDownloadURL().then((fileURL) {
+    });
+  }
+
+   */
 }
 
 

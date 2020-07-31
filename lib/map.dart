@@ -125,8 +125,9 @@ class MapState extends State<TheMap> {
 // get the collection reference or query
     var collectionReference = firestore.collection('LocationAudio');
 
-    double radius = 500;
+    double radius = 500000;
     String field = 'position';
+
 
     Stream<List<DocumentSnapshot>> stream = geo.collection(collectionRef: collectionReference)
         .within(center: center, radius: radius, field: field);
@@ -211,8 +212,6 @@ class MapState extends State<TheMap> {
     return '${tempDir.path}/$trackName';
   }
 
-
-
   void setInitialLocation() async {
     currentLocation = await location.getLocation();
   }
@@ -250,7 +249,6 @@ class MapState extends State<TheMap> {
                 else{
                   controller.setMapStyle(UtilsBlue.mapStyles);
                 }
-
                 _controller.complete(controller);
                 // my map has completed being created;
                 // i'm ready to show the pins on the map
