@@ -106,17 +106,17 @@ class MapState extends State<TheMap> {
 
     //<JPK> just hacking around here to try to make connection to database
     //below adds to the db
-    /*
-    GeoFirePoint listenLoc = geo.point(latitude: 38.720586, longitude: -9.134905);
-    GeoFirePoint eventLoc = geo.point(latitude: 38.720586, longitude:  -9.136905);
+/*
+    GeoFirePoint listenLoc = geo.point(latitude: 38.720586, longitude: -9.135905);
+    GeoFirePoint eventLoc = geo.point(latitude: 38.720586, longitude:  -9.137905);
     firestore
         .collection('LocationAudio')
-        .add({'name': 'listen name', 'position': listenLoc.data});
+        .add({'name': 'listen to this', 'position': listenLoc.data, 'Type':'Listen', 'filename': 'blah.m4a'});
 
     firestore
         .collection('LocationAudio')
-        .add({'name': 'event name', 'position': eventLoc.data});
-    */
+        .add({'name': 'cool happening', 'position': eventLoc.data,'Type':'Event', 'filename': 'woof.m4a'});
+  */
 
     //code below reads from the db, and makes new markers?
     // Create a geoFirePoint for our current location (hacked for now)
@@ -181,6 +181,11 @@ class MapState extends State<TheMap> {
   }
 
   Future<void> playTrack(track) async {// may not need to be a future
+
+    ///TODO:
+    ///<JPK> we will need an isplaying array, or a class or something so we can
+    ///start and stop multiple audio files.
+    ///OR simplest thing is no stop at all, just play play play.
 
     /// added a simple if check to make the audio stop when pressed again.
     /// also moved the AudioPlayer up so that it wouldn't create a new
