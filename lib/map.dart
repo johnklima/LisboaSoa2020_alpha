@@ -138,8 +138,9 @@ class MapState extends State<TheMap> {
         String name = document.data['name'];
         String type = document.data['Type'];
         String filename = document.data['filename'];
+        String iD = document.documentID.toString();
         //need to sort which marker i suppose
-        addMarkers("Listen", LatLng(pos.latitude, pos.longitude), type, name,
+        addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,
             filename);
       });
 
