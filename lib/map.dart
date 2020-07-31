@@ -1,17 +1,19 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:io' as io;
 import 'package:lisboasoa2020/buttons.dart';
 import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
-import 'dart:async';
 import 'website.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import 'audioPlayer.dart';
+import 'package:audioplayers/audioplayers.dart';
+import 'package:path_provider/path_provider.dart';
 import 'GoogleMaps/mapEventPage.dart';
 import "GoogleMaps/MapDesign.dart";
 
@@ -45,6 +47,11 @@ class MapState extends State<TheMap> {
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
 
+  //gimme an audio player
+  var directory;
+  bool isPlaying;
+  AudioPlayer audioPlayer = AudioPlayer();
+
   var eventOverlay;
   var eventName;
   //Current user location
@@ -67,6 +74,9 @@ class MapState extends State<TheMap> {
     });
     setSourceAndDestinationIcons();
     setInitialLocation();
+    initAudio();
+    isPlaying = false;
+
   }
 
   void setSourceAndDestinationIcons() async {
@@ -127,16 +137,75 @@ class MapState extends State<TheMap> {
         GeoPoint pos = document.data['position']['geopoint'];
         String name = document.data['name'];
         String type = document.data['Type'];
-
+        String filename = document.data['filename'];
         //need to sort which marker i suppose
         addMarkers("Listen", LatLng(pos.latitude, pos.longitude), type, name,
-            "Sound");
+            filename);
       });
 
 
     });
 
   }
+
+  /// This is the same function that is called in "recorder.dart"
+  /// it collects the devices directory, should perhaps be made into its
+  /// own dart file so it can be called when it's needed and only be
+  /// called once ?.
+  initAudio() async {
+    try {
+      if (await Permission.storage.request().isGranted
+          && await Permission.mediaLibrary.request().isGranted
+      ) {
+        io.Directory appDocDirectory;
+//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
+        if (io.Platform.isIOS) {
+          appDocDirectory = await getApplicationDocumentsDirectory();
+          directory = appDocDirectory;
+        } else {
+          appDocDirectory = await getExternalStorageDirectory();
+          directory = appDocDirectory;
+          print(directory);
+        }
+      } else {
+        Scaffold.of(context).showSnackBar(
+            new SnackBar(content: new Text("You must accept permissions")));
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+  PressedPlay(trackName) async {
+    var track = await downloadFile(trackName); // should replace track2 with trackName which should be the contents(text) of the button
+    playTrack(track);
+  }
+
+  Future<void> playTrack(track) async {// may not need to be a future
+
+    /// added a simple if check to make the audio stop when pressed again.
+    /// also moved the AudioPlayer up so that it wouldn't create a new
+    /// reference for each time we called it. (this what caused the
+    /// audio going on top of each other.
+    if (!isPlaying){
+      await audioPlayer.play(track, isLocal: true);
+      isPlaying = true;
+    }
+    else{
+      await audioPlayer.stop();
+      isPlaying = false;
+    }
+  }
+
+  Future<String> downloadFile(String trackName) async {
+    final Directory tempDir = directory;
+    final File file = File('${tempDir.path}/$trackName');
+    final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
+    final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
+    final int byteNumber = (await downloadTask.future).totalByteCount;
+    return '${tempDir.path}/$trackName';
+  }
+
+
 
   void setInitialLocation() async {
     currentLocation = await location.getLocation();
@@ -235,7 +304,7 @@ class MapState extends State<TheMap> {
   void addMarkers(
       String markerID, LatLng pos, String type, String Title, String Snippet) {
 
-    print("ADD MARKER");
+    print("ADD MARKER " + Title);
 
     if (listen && type == "Listen") {
       _markers.add(
@@ -243,9 +312,14 @@ class MapState extends State<TheMap> {
           markerId: MarkerId(markerID),
           position: pos,
           icon: listenMarker, //Should be controlled by the type
+
           infoWindow: InfoWindow(
             title: Title,
             snippet: Snippet,
+//<JPK> does this actually work?
+            onTap: (){
+              PressedPlay(Snippet);
+            }
           ),
         ),
       );
