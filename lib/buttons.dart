@@ -111,7 +111,6 @@ class ImageRotate extends StatefulWidget {
 
   final imageLoc;
   final isPlaying;
-
   ImageRotate(this.imageLoc,this.isPlaying);
 
   @override

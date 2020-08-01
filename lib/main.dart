@@ -29,6 +29,13 @@ void main() {
 }
 
 class MyApp extends StatefulWidget {
+
+  final LocalFileSystem localFileSystem;
+// Calls a function from a imported package to get the local directory.
+  MyApp({localFileSystem})
+      : this.localFileSystem = localFileSystem ?? LocalFileSystem();
+
+
   @override
   _MyAppState createState() => _MyAppState();
 }
@@ -166,12 +173,8 @@ class HomePage extends StatelessWidget {
 /// Under here seems to not be of use and is only stored
 /// in case it is needed
 
-/*
-final LocalFileSystem localFileSystem;
-// Calls a function from a imported package to get the local directory.
-MyApp({localFileSystem})
-    : this.localFileSystem = localFileSystem ?? LocalFileSystem();
-*/
+
+
 /*
 body: ListView(
 children: <Widget>[

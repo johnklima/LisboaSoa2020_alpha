@@ -319,7 +319,7 @@ class MapState extends State<TheMap> {
 
           infoWindow: InfoWindow(
             title: Title,
-            snippet: Snippet,
+            snippet: Title,
 //<JPK> does this actually work?
             onTap: (){
               PressedPlay(Snippet);

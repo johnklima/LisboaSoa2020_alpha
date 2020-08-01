@@ -15,6 +15,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:file_picker/file_picker.dart';
 
 import 'buttons.dart';
+import 'main.dart';
 import 'audioFiles.dart';
 
 class Recorder extends StatefulWidget {
@@ -32,10 +33,10 @@ class _RecorderState extends State<Recorder> {
   Firestore firestore = Firestore.instance;
   Geoflutterfire geo = Geoflutterfire();
 
-
+  io.File file;
 
   var DocDir;
-  var isPlaying = true;
+  var isPlaying;
 
   // variables stored for sending to the json on save.
   String guid;
@@ -362,7 +363,7 @@ class _RecorderState extends State<Recorder> {
     var result = await _recorder.stop();
     print("Stop recording: ${result.path}");
     print("Stop recording: ${result.duration}");
-    //File file = MyApp().localFileSystem.file(result.path);
+    file = MyApp().localFileSystem.file(result.path);
     //print("File length: ${await file.length()}");
     setState(() {
       _current = result;
@@ -401,35 +402,27 @@ class _RecorderState extends State<Recorder> {
 
     GeoFirePoint position = geo.point(latitude: pos.latitude, longitude: pos.longitude);
 
-
     firestore
         .collection('LocationAudio')
-        .add({'name': 'from recorder', 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': 'Philly4.m4a'});
+        .add({'name': 'from recorder', 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid});
 
-
+    uploadFile();
     //AudioFiles audioFiles = AudioFiles(guid, pos.toString(), dur, loc);
     //print(audioFiles.toJson());
   }
-
   /// work in progress file upload.
-  /*
+
     Future uploadFile() async {
-
-      File file = await FilePicker.ge
-
-
 
       StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child('chats/${Path.basename(_current.path)}}');
-    StorageUploadTask uploadTask = storageReference.putFile(_curr ent);
+        .child(guid);
+    StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
     print('File Uploaded');
     storageReference.getDownloadURL().then((fileURL) {
     });
   }
-
-   */
 }
 
 
