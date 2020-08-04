@@ -23,6 +23,9 @@ class AudioRecorder extends StatefulWidget {
   _MyAppState createState() => new _MyAppState();
 }
 
+/// THIS SCRIPT IS NOT IN USE, ONLY USED FOR REFERENCE
+/// "record.dart" IS THE RECORDER SCRIPT FOR THE APP.
+
 class _MyAppState extends State<AudioRecorder> {
   @override
   Widget build(BuildContext context) {
