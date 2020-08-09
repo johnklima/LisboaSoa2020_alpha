@@ -193,6 +193,12 @@ class MapState extends State<TheMap> {
     /// also moved the AudioPlayer up so that it wouldn't create a new
     /// reference for each time we called it. (this what caused the
     /// audio going on top of each other.
+    ///
+    ///
+    /// just play
+
+    await audioPlayer.play(track, isLocal: true);
+    /*
     if (!isPlaying){
       await audioPlayer.play(track, isLocal: true);
       isPlaying = true;
@@ -201,6 +207,8 @@ class MapState extends State<TheMap> {
       await audioPlayer.stop();
       isPlaying = false;
     }
+
+     */
   }
 
   Future<String> downloadFile(String trackName) async {
@@ -319,7 +327,6 @@ class MapState extends State<TheMap> {
 
           infoWindow: InfoWindow(
             title: Title,
-            snippet: Title,
 //<JPK> does this actually work?
             onTap: (){
               PressedPlay(Snippet);

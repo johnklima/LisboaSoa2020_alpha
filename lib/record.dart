@@ -37,6 +37,7 @@ class _RecorderState extends State<Recorder> {
 
   var DocDir;
   var isPlaying;
+  var recordingName;
 
   // variables stored for sending to the json on save.
   String guid;
@@ -88,9 +89,21 @@ class _RecorderState extends State<Recorder> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Center(
-                    child: Text(
-                      "Playing this audio..",
-                      style: Theme.of(context).textTheme.bodyText1,
+                    child : Container(
+                      margin: EdgeInsets.fromLTRB(30, 0, 30, 0),
+                      child: TextField(
+                        maxLength: 20,
+                        onChanged:(text) {
+                          setState(() {
+                            recordingName = text;
+                          });
+                        },
+                        decoration: InputDecoration(
+                            border: InputBorder.none,
+                            hintText: "Recording Name.."
+                        ),
+                        style: Theme.of(context).textTheme.bodyText1,
+                      ),
                     ),
                   ),
                 ),
@@ -398,15 +411,23 @@ class _RecorderState extends State<Recorder> {
   //or if this is the correct way to send it to the json.
   void saveToJson() {
 
+    if (recordingName == null){
+      print(recordingName);
+    }
+    else{
+      print(recordingName);
+
+      GeoFirePoint position = geo.point(latitude: pos.latitude, longitude: pos.longitude);
+
+
+      firestore
+          .collection('LocationAudio')
+          .add({'name': recordingName , 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid});
+
+      uploadFile();
+    }
     //var collectionReference = firestore.collection('LocationAudio');
 
-    GeoFirePoint position = geo.point(latitude: pos.latitude, longitude: pos.longitude);
-
-    firestore
-        .collection('LocationAudio')
-        .add({'name': 'from recorder', 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid});
-
-    uploadFile();
     //AudioFiles audioFiles = AudioFiles(guid, pos.toString(), dur, loc);
     //print(audioFiles.toJson());
   }
