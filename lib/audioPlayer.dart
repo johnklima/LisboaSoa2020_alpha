@@ -4,11 +4,7 @@ import 'dart:io';
 import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
 
-import 'package:firebase_storage/firebase_storage.dart';
-import "package:cloud_firestore/cloud_firestore.dart";
-import 'package:lisboasoa2020/main.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:path_provider/path_provider.dart';
+
 
 ///This is only used to play audio in the app.
 
