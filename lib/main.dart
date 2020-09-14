@@ -2,22 +2,18 @@ import 'dart:ui';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:file/file.dart';
+
 import 'package:file/local.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:lisboasoa2020/audioPlayer.dart';
+
 
 //Internal Packages
 import 'buttons.dart';
-import 'dataMap.dart';
-import 'recorder.dart';
-import "calendar.dart";
-import 'videoplayer.dart';
-import 'firebaseaudio.dart';
+
 import 'website.dart';
 import 'map.dart';
-import 'audiomap.dart';
+
 import 'record.dart';
 
 void main() {

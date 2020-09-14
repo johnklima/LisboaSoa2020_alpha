@@ -455,7 +455,7 @@ class TheEventPage extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: const Color(0xff7c94b6),
                                         image: const DecorationImage(
-                                          image: NetworkImage('https://static.noroff.no/cms/ansatte/krs/john-klima.jpg'),
+                                          image: NetworkImage('http://www.lisboasoa.com/wp-content/uploads/2020/08/banner.jpg'),
                                           fit: BoxFit.cover,
                                         ),
                                         border: Border.all(
