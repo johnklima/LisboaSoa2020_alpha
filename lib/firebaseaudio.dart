@@ -7,10 +7,10 @@ import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:permission_handler/permission_handler.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:audioplayers/audio_cache.dart';
+
 
 import 'package:audioplayers/audioplayers.dart';
-import 'package:lisboasoa2020/recorder.dart';
+
 
 class FireAudio extends StatefulWidget {
 

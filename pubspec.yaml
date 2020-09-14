@@ -42,8 +42,7 @@ dependencies:
   firebase_storage:
   firebase_core:
   firebase_database:
-  video_player:
-  audioplayer2: ^0.5.2
+  #audioplayer2: ^0.5.2
   webview_flutter: ^0.3.22+1
   file_picker: ^1.13.0+1
 
