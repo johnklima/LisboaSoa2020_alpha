@@ -43,6 +43,22 @@
 	<string>LaunchScreen</string>
 	<key>UIMainStoryboardFile</key>
 	<string>Main</string>
+
+<key>NSContactsUsageDescription</key>
+<string>This app wants to access your contacts, but we are not doing that, so please say yes.</string>
+
+<key>NSCalendarsUsageDescription</key>
+<string>This app wants to access your calendar, but we are not doing that, so please say yes.</string>
+
+<key> NSPhotoLibraryUsageDescription </key>
+<string>This app wants to access your photos, but we are not doing that, so please say yes.</string>
+
+
+<key> NSSpeechRecognitionUsageDescription </key>
+<string>This app wants to access your voice, but we are not doing that, so please say yes.</string>
+
+
+
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
