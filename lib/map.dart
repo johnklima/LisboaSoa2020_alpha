@@ -20,7 +20,7 @@ import "GoogleMaps/MapDesign.dart";
 const double CAMERA_ZOOM = 15;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
-const LatLng SOURCE_LOCATION = LatLng(38.720586, 9.134905);
+const LatLng SOURCE_LOCATION = LatLng(38.720586, -9.134905);
 var listen;
 
 class TheMap extends StatefulWidget {
@@ -121,7 +121,7 @@ class MapState extends State<TheMap> {
 
     //code below reads from the db, and makes new markers?
     // Create a geoFirePoint for our current location (hacked for now)
-    GeoFirePoint center = geo.point(latitude: 38.720586, longitude: -9.134905);
+    GeoFirePoint center = geo.point(latitude: 38.720586, longitude: 9.134905);
 
 // get the collection reference or query
     var collectionReference = firestore.collection('LocationAudio');
@@ -235,7 +235,7 @@ class MapState extends State<TheMap> {
 
     if (currentLocation != null) {
       initialCameraPosition = CameraPosition(
-          target: LatLng(38.720586, 9.134905),
+          target: LatLng(38.720586, -9.134905),
           zoom: CAMERA_ZOOM,
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);
@@ -322,6 +322,7 @@ class MapState extends State<TheMap> {
 
     if (listen && type == "Listen") {
         print("ADD MARKER " + Title);
+        print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
         _markers.add(
         Marker(
           markerId: MarkerId(markerID),
@@ -339,6 +340,7 @@ class MapState extends State<TheMap> {
       );
     } else if (!listen && type == "Event") {
       print("ADD MARKER " + Title);
+      print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
