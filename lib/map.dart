@@ -67,12 +67,15 @@ class MapState extends State<TheMap> {
   @override
   void initState() {
     super.initState();
+
+
+
     print(listen);
     location = new Location();
     print("INIT STATE");
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
-      setSourceAndDestinationIcons();
+
       updatePinOnMap();
     });
 
@@ -84,29 +87,23 @@ class MapState extends State<TheMap> {
   }
 
   void setSourceAndDestinationIcons() async {
-    print(
-        "Should Place the markers Should Place the markers Should Place the markers Should Place the markers Should Place the markers ");
-    listenMarker = await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(devicePixelRatio: 25),
-            'assets/MapMarkers/LisboaSoa_ListenMarker_Medium.png')
+
+
+    listenMarker =  await BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(devicePixelRatio: 25),
+        'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
         .then((onValue) {
       return onValue;
     });
 
+
     lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
-            ImageConfiguration(devicePixelRatio: 25),
-            'assets/MapMarkers/LisboaSoa_SoaMarker_Medium.png')
-        // ignore: missing_return
+        ImageConfiguration(devicePixelRatio: 25),
+        'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
+    // ignore: missing_return
         .then((value) {
       return value;
     });
-
-
-    addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
-        "Sound");
-    addMarkers("Event", LatLng(38.720586, -9.136905), "LisboaSoa",
-        "Event", "Event");
-
 
     //<JPK> just hacking around here to try to make connection to database
     //below adds to the db
@@ -282,7 +279,7 @@ class MapState extends State<TheMap> {
     _markers.add(Marker(
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
-        icon: lisboaSoaMarker));
+        icon:lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker ));
 
 
 
@@ -310,7 +307,7 @@ class MapState extends State<TheMap> {
         Marker(
           markerId: MarkerId('sourcePin'),
           position: pinPosition, // updated position
-          icon: lisboaSoaMarker,
+            icon:lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker ,
           infoWindow: InfoWindow(
             title: "You are here!",
           ),
@@ -323,14 +320,13 @@ class MapState extends State<TheMap> {
   void addMarkers(
       String markerID, LatLng pos, String type, String Title, String Snippet) {
 
-    print("ADD MARKER " + Title);
-
     if (listen && type == "Listen") {
-      _markers.add(
+        print("ADD MARKER " + Title);
+        _markers.add(
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: listenMarker, //Should be controlled by the type
+          icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
 
           infoWindow: InfoWindow(
             title: Title,
@@ -342,11 +338,12 @@ class MapState extends State<TheMap> {
         ),
       );
     } else if (!listen && type == "Event") {
+      print("ADD MARKER " + Title);
       _markers.add(
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: lisboaSoaMarker, //Should be controlled by the type
+          icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
           onTap: () {
             print("Pushed the map button");
             setState(() {
