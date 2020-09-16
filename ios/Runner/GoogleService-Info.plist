@@ -3,9 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>616626684691-ls6gp89121iqcia615eke1hf8hh6clfd.apps.googleusercontent.com</string>
+	<string>616626684691-idclro9se5f3gfvg7i97atdb2641mcbo.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.616626684691-ls6gp89121iqcia615eke1hf8hh6clfd</string>
+	<string>com.googleusercontent.apps.616626684691-idclro9se5f3gfvg7i97atdb2641mcbo</string>
 	<key>API_KEY</key>
 	<string>AIzaSyC0qPOlCta1ojzirYBjLu9mtf_igowxq28</string>
 	<key>GCM_SENDER_ID</key>
@@ -13,7 +13,7 @@
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.cityarts.lisboasoa2020</string>
+	<string>com.lisboasoa.2020</string>
 	<key>PROJECT_ID</key>
 	<string>applied-tractor-279610</string>
 	<key>STORAGE_BUCKET</key>
@@ -29,7 +29,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:616626684691:ios:3bf71cc8c2a440077690e6</string>
+	<string>1:616626684691:ios:50a6da509b1808d97690e6</string>
 	<key>DATABASE_URL</key>
 	<string>https://applied-tractor-279610.firebaseio.com</string>
 </dict>
