@@ -212,8 +212,6 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - audioplayer2 (0.0.1):
-    - Flutter
   - audioplayers (0.0.1):
     - Flutter
   - BoringSSL-GRPC (0.0.7):
@@ -429,15 +427,10 @@ PODS:
   - SDWebImageFLPlugin (0.4.0):
     - FLAnimatedImage (>= 1.0.11)
     - SDWebImage/Core (~> 5.6)
-  - video_player (0.0.1):
-    - Flutter
-  - video_player_web (0.0.1):
-    - Flutter
   - webview_flutter (0.0.1):
     - Flutter
 
 DEPENDENCIES:
-  - audioplayer2 (from `.symlinks/plugins/audioplayer2/ios`)
   - audioplayers (from `.symlinks/plugins/audioplayers/ios`)
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
   - cloud_firestore_web (from `.symlinks/plugins/cloud_firestore_web/ios`)
@@ -460,8 +453,6 @@ DEPENDENCIES:
   - path_provider_linux (from `.symlinks/plugins/path_provider_linux/ios`)
   - path_provider_macos (from `.symlinks/plugins/path_provider_macos/ios`)
   - permission_handler (from `.symlinks/plugins/permission_handler/ios`)
-  - video_player (from `.symlinks/plugins/video_player/ios`)
-  - video_player_web (from `.symlinks/plugins/video_player_web/ios`)
   - webview_flutter (from `.symlinks/plugins/webview_flutter/ios`)
 
 SPEC REPOS:
@@ -494,8 +485,6 @@ SPEC REPOS:
     - SDWebImageFLPlugin
 
 EXTERNAL SOURCES:
-  audioplayer2:
-    :path: ".symlinks/plugins/audioplayer2/ios"
   audioplayers:
     :path: ".symlinks/plugins/audioplayers/ios"
   cloud_firestore:
@@ -540,16 +529,11 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/path_provider_macos/ios"
   permission_handler:
     :path: ".symlinks/plugins/permission_handler/ios"
-  video_player:
-    :path: ".symlinks/plugins/video_player/ios"
-  video_player_web:
-    :path: ".symlinks/plugins/video_player_web/ios"
   webview_flutter:
     :path: ".symlinks/plugins/webview_flutter/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  audioplayer2: f3c5971880df0476ba53abe7deb5a76570165994
   audioplayers: 84f968cea3f2deab00ec4f8ff53358b3c0b3992c
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: 2a4f8f802fb0b701cf809b283b6bec7477ebaa6f
@@ -597,8 +581,6 @@ SPEC CHECKSUMS:
   PromisesObjC: b48e0338dbbac2207e611750777895f7a5811b75
   SDWebImage: cf6922231e95550934da2ada0f20f2becf2ceba9
   SDWebImageFLPlugin: 6c2295fb1242d44467c6c87dc5db6b0a13228fd8
-  video_player: 9cc823b1d9da7e8427ee591e8438bfbcde500e6e
-  video_player_web: da8cadb8274ed4f8dbee8d7171b420dedd437ce7
   webview_flutter: d2b4d6c66968ad042ad94cbb791f5b72b4678a96
 
 PODFILE CHECKSUM: c34e2287a9ccaa606aeceab922830efb9a6ff69a
