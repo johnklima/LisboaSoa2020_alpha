@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:io' as io;
-import 'package:lisboasoa2020/buttons.dart';
-import 'package:maps_toolkit/maps_toolkit.dart' as mp;
+//import 'package:lisboasoa2020/buttons.dart';
+//import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'website.dart';
@@ -14,7 +14,7 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
-import 'GoogleMaps/mapEventPage.dart';
+
 import "GoogleMaps/MapDesign.dart";
 
 const double CAMERA_ZOOM = 15;
@@ -44,7 +44,8 @@ class MapState extends State<TheMap> {
   BitmapDescriptor lisboaSoaMarker;
 
  //gimme firestore
-  Firestore firestore = Firestore.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
+
   Geoflutterfire geo = Geoflutterfire();
 
   //gimme an audio player
@@ -135,10 +136,10 @@ class MapState extends State<TheMap> {
     stream.listen((List<DocumentSnapshot> documentList) {
       //add the markers
       documentList.forEach((DocumentSnapshot document) {
-        GeoPoint pos = document.data['position']['geopoint'];
-        String name = document.data['name'];
-        String type = document.data['Type'];
-        String filename = document.data['filename'];
+        GeoPoint pos = document.data()['position']['geopoint'];
+        String name = document.data()['name'];
+        String type = document.data()['Type'];
+        String filename = document.data()['filename'];
         String iD = document.documentID.toString();
         //need to sort which marker i suppose
         addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,

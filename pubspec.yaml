@@ -18,33 +18,32 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ">=2.7.0 <3.0.0"
-
+  sdk:
 dependencies:
-  google_maps_flutter: ^0.5.27+3
+  google_maps_flutter:
   geoflutterfire:
   flutter:
     sdk: flutter
   # added dependencies. (Recorder system)
-  flutter_audio_recorder: ^0.5.5
-  path_provider: ^1.6.10
-  permission_handler: ^5.0.1
-  audioplayers: ^0.15.1
-  geolocator: ^5.3.2+2
-  location: ^3.0.2
-  flutter_guid: ^0.1.0
-  uuid: ^2.1.0
-  json_annotation: ^3.0.1
-  flutter_calendar_carousel: ^1.4.12
-  maps_toolkit: ^1.1.0+2
+  flutter_audio_recorder:
+  path_provider:
+  permission_handler:
+  audioplayers:
+  geolocator:
+  location:
+  flutter_guid:
+  uuid:
+  json_annotation:
+  flutter_calendar_carousel:
+  maps_toolkit:
   # <JPK> im not using versions here, lets see if it does not make things simpler
   cloud_firestore:
   firebase_storage:
-  firebase_core:
+  firebase_core : ^0.5.0
   firebase_database:
   #audioplayer2: ^0.5.2
-  webview_flutter: ^0.3.22+1
-  file_picker: ^1.13.0+1
+  webview_flutter:
+  file_picker:
 
 
 

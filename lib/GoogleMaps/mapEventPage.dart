@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:lisboasoa2020/map.dart';
+//import 'package:lisboasoa2020/map.dart';
 
 @immutable
 class MapEvent extends StatelessWidget {

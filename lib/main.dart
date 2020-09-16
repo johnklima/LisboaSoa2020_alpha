@@ -15,9 +15,11 @@ import 'website.dart';
 import 'map.dart';
 
 import 'record.dart';
-
-void main() {
+// Import the firebase_core plugin
+import 'package:firebase_core/firebase_core.dart';
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(new MyApp());
