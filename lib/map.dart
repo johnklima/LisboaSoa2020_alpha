@@ -51,6 +51,7 @@ class MapState extends State<TheMap> {
   //gimme an audio player
   var directory;
   bool isPlaying;
+
   AudioPlayer audioPlayer = AudioPlayer();
 
   var eventOverlay;
@@ -68,14 +69,16 @@ class MapState extends State<TheMap> {
     super.initState();
     print(listen);
     location = new Location();
-
+    print("INIT STATE");
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
+      setSourceAndDestinationIcons();
       updatePinOnMap();
     });
-    setSourceAndDestinationIcons();
+
     setInitialLocation();
     initAudio();
+    setSourceAndDestinationIcons();
     isPlaying = false;
 
   }
@@ -98,12 +101,12 @@ class MapState extends State<TheMap> {
       return value;
     });
 
-    /*
+
     addMarkers("Listen", LatLng(38.720586, -9.134905), "Listen", "Listen to this sound",
         "Sound");
     addMarkers("Event", LatLng(38.720586, -9.136905), "LisboaSoa",
         "Event", "Event");
-    */
+
 
     //<JPK> just hacking around here to try to make connection to database
     //below adds to the db
@@ -140,7 +143,7 @@ class MapState extends State<TheMap> {
         String name = document.data()['name'];
         String type = document.data()['Type'];
         String filename = document.data()['filename'];
-        String iD = document.documentID.toString();
+        String iD = document.id.toString();
         //need to sort which marker i suppose
         addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,
             filename);
@@ -280,6 +283,9 @@ class MapState extends State<TheMap> {
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
         icon: lisboaSoaMarker));
+
+
+
     // destination pin
     // set the route lines on the map from source to destination
     // for more info follow this tutorial
@@ -328,7 +334,7 @@ class MapState extends State<TheMap> {
 
           infoWindow: InfoWindow(
             title: Title,
-//<JPK> does this actually work?
+
             onTap: (){
               PressedPlay(Snippet);
             }
@@ -456,7 +462,7 @@ class TheEventPage extends StatelessWidget {
                                       decoration: BoxDecoration(
                                         color: const Color(0xff7c94b6),
                                         image: const DecorationImage(
-                                          image: NetworkImage('http://www.lisboasoa.com/wp-content/uploads/2020/08/banner.jpg'),
+                                          image: NetworkImage('https://www.lisboasoa.com/wp-content/uploads/2020/08/banner.jpg'),
                                           fit: BoxFit.cover,
                                         ),
                                         border: Border.all(
