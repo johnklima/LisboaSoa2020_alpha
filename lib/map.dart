@@ -20,7 +20,7 @@ import "GoogleMaps/MapDesign.dart";
 const double CAMERA_ZOOM = 15;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
-const LatLng SOURCE_LOCATION = LatLng(38.720586, -9.134905);
+const LatLng SOURCE_LOCATION = LatLng(38.720586, 9.134905);
 var listen;
 
 class TheMap extends StatefulWidget {
@@ -235,7 +235,7 @@ class MapState extends State<TheMap> {
 
     if (currentLocation != null) {
       initialCameraPosition = CameraPosition(
-          target: LatLng(38.720586, -9.134905),
+          target: LatLng(38.720586, 9.134905),
           zoom: CAMERA_ZOOM,
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);

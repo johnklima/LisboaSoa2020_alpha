@@ -6,7 +6,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_audio_recorder/flutter_audio_recorder.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:geolocator/geolocator.dart';
+
+import 'package:location/location.dart';
 import 'package:flutter_guid/flutter_guid.dart';
 
 import 'package:firebase_storage/firebase_storage.dart';
@@ -41,15 +42,30 @@ class _RecorderState extends State<Recorder> {
 
   // variables stored for sending to the json on save.
   String guid;
-  Position pos;
+
   String dur;
   String loc;
+
+  //Current user location
+  LocationData currentLocation;
+  Location location;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     print("Hello");
+
+    location = new Location();
+
+    location.onLocationChanged.listen((LocationData cLoc) {
+      currentLocation = cLoc;
+
+    });
+
+    setInitialLocation();
+
+    print("INIT STATE");
     _init();
   }
 
@@ -230,6 +246,9 @@ class _RecorderState extends State<Recorder> {
     );
   }
 
+  void setInitialLocation() async {
+    currentLocation = await location.getLocation();
+  }
   Widget recordButton() {
 
     var _widgetToReturn = RecorderButton(
@@ -417,7 +436,7 @@ class _RecorderState extends State<Recorder> {
     else{
       print(recordingName);
 
-      GeoFirePoint position = geo.point(latitude: pos.latitude, longitude: pos.longitude);
+      GeoFirePoint position = geo.point(latitude: currentLocation.latitude, longitude:currentLocation.longitude);
 
 
       firestore
