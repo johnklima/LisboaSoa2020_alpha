@@ -9,7 +9,7 @@ import 'website.dart';
 import 'package:audioplayers/audioplayers.dart';
 
 //import 'audioPlayer.dart';
-import 'GoogleMaps/mapEventPage.dart';
+//import 'GoogleMaps/mapEventPage.dart';
 
 const double CAMERA_ZOOM = 16;
 const double CAMERA_TILT = 40;
@@ -35,7 +35,7 @@ class _MapState extends State<AudioMap> {
 
   final dbRef = FirebaseDatabase.instance.reference().child("LocationAudio");
 
-  Timer _everySecond;
+  //Timer _everySecond;
 
   _MapState(this.eventOverlay);
   //Current user location

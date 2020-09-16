@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'dart:convert'; // not sure if this is needed.
+//import 'dart:convert'; // not sure if this is needed.
 import 'dart:io' as io;
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
@@ -12,11 +12,11 @@ import 'package:flutter_guid/flutter_guid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:file_picker/file_picker.dart';
+//import 'package:file_picker/file_picker.dart';
 
 import 'buttons.dart';
 import 'main.dart';
-import 'audioFiles.dart';
+//import 'audioFiles.dart';
 
 class Recorder extends StatefulWidget {
   @override
@@ -30,7 +30,7 @@ class _RecorderState extends State<Recorder> {
   AudioPlayer audioPlayer = AudioPlayer();
 
 //FireStore
-  Firestore firestore = Firestore.instance;
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
   Geoflutterfire geo = Geoflutterfire();
 
   io.File file;
@@ -289,8 +289,8 @@ class _RecorderState extends State<Recorder> {
           appDocDirectory = await getExternalStorageDirectory();
         }
 
-        pos = await Geolocator()
-            .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+        //pos = await Geolocator()
+        //    .getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
         Guid iD = Guid.newGuid;
         guid = iD.value;
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
