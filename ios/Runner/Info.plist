@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key> NSPhotoLibraryUsageDescription </key>
-	<string>This app wants to access your photos, but we are not doing that, so please say yes.</string>
-	<key> NSSpeechRecognitionUsageDescription </key>
-	<string>This app wants to access your voice, but we are not doing that, so please say yes.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -49,8 +45,10 @@
 	<string>Can We Use Your Microphone Please</string>
 	<key>NSMotionUsageDescription </key>
 	<string>Can we use your motion library even though we dont, just another apple requirement</string>
-	<key>NSPhotoLibraryUsageDescription </key>
-	<string>Can we use your photo library even though we dont, just another apple requirement</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>We use access to photo library with write only responsibly</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>photos</string>
 	<key>NSSpeechRecognitionUsageDescription </key>
 	<string>Can we use your speech library even though we dont, just another apple requirement</string>
 	<key>UILaunchStoryboardName</key>

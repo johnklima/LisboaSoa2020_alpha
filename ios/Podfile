@@ -62,7 +62,7 @@ post_install do |installer|
         ## dart: PermissionGroup.mediaLibrary
         'PERMISSION_MEDIA_LIBRARY=0',
 		
-		  ## dart: PermissionGroup.photoLibrary
+	## dart: PermissionGroup.photoLibrary
         'PERMISSION_PHOTO_LIBRARY=0',
 
         ## dart: PermissionGroup.sensors
