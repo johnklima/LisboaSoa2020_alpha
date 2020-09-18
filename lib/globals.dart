@@ -31,6 +31,81 @@ Geoflutterfire geo;
 BitmapDescriptor listenMarker;
 BitmapDescriptor lisboaSoaMarker;
 
+//gimme an audio player
+var directory;
+bool isPlaying;
+AudioPlayer audioPlayer = AudioPlayer();
+
+
+/// This is the same function that is called in "recorder.dart"
+/// it collects the devices directory, should perhaps be made into its
+/// own dart file so it can be called when it's needed and only be
+/// called once ?.
+initAudio() async {
+  try {
+    if (await Permission.storage.request().isGranted
+        && await Permission.mediaLibrary.request().isGranted
+    ) {
+      io.Directory appDocDirectory;
+//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
+      if (io.Platform.isIOS) {
+        appDocDirectory = await getApplicationDocumentsDirectory();
+        directory = appDocDirectory;
+      } else {
+        appDocDirectory = await getExternalStorageDirectory();
+        directory = appDocDirectory;
+        print(directory);
+      }
+    }
+  } catch (e) {
+    print(e);
+  }
+}
+
+Future<void> playTrack(track) async {// may not need to be a future
+
+  ///TODO:
+  ///<JPK> we will need an isplaying array, or a class or something so we can
+  ///start and stop multiple audio files.
+  ///OR simplest thing is no stop at all, just play play play.
+
+  /// added a simple if check to make the audio stop when pressed again.
+  /// also moved the AudioPlayer up so that it wouldn't create a new
+  /// reference for each time we called it. (this what caused the
+  /// audio going on top of each other.
+  ///
+  ///
+  /// just play
+
+  await audioPlayer.play(track, isLocal: true);
+  /*
+    if (!isPlaying){
+      await audioPlayer.play(track, isLocal: true);
+      isPlaying = true;
+    }
+    else{
+      await audioPlayer.stop();
+      isPlaying = false;
+    }
+
+     */
+}
+
+Future<String> downloadFile(String trackName) async {
+  final Directory tempDir = directory;
+  final File file = File('${tempDir.path}/$trackName');
+  final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
+  final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
+  final int byteNumber = (await downloadTask.future).totalByteCount;
+  return '${tempDir.path}/$trackName';
+}
+
+Future <int> PressedPlay(trackName) async {
+  var track = await downloadFile(trackName); // should replace track2 with trackName which should be the contents(text) of the button
+  playTrack(track);
+  return 1;
+}
+
 void loadStuff()
 {
   _markers.clear();
@@ -40,6 +115,7 @@ void loadStuff()
 
    geo = Geoflutterfire();
 
+   initAudio();
    loadCustomIcons();
    setSourceAndDestinationIcons();
 
@@ -88,13 +164,14 @@ Marker addMarkers(
         title: Title,
 
         onTap: (){
-          //PressedPlay(Snippet);
+          PressedPlay(Snippet);
         }
     ),
   );
   _markers.add(marker);
   return marker;
 }
+
 void setSourceAndDestinationIcons()  {
 
   //<JPK> just hacking around here to try to make connection to database
@@ -139,6 +216,6 @@ void setSourceAndDestinationIcons()  {
           filename);
 
     }
-
   });
+
 }

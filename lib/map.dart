@@ -73,7 +73,11 @@ class MapState extends State<TheMap> {
   void initState() {
     super.initState();
 
+    for (final marker in globals.getMarkers())
+    {
 
+
+    }
 
     print(listen);
     location = new Location();
