@@ -13,6 +13,7 @@ import 'buttons.dart';
 
 import 'website.dart';
 import 'map.dart';
+import 'SimpleMap.dart';
 
 import 'record.dart';
 // Import the firebase_core plugin
@@ -110,7 +111,7 @@ class HomePage extends StatelessWidget {
                   Container(
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child: NavigateTo(TheMap(true), "listen"),
+                    child:NavigateTo(SimpleMap(), "listen"), // NavigateTo(TheMap(true), "listen"),
                   ),
                   Container(
                     child: NavigateTo(Recorder(), "record"),
