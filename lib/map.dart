@@ -79,19 +79,19 @@ class MapState extends State<TheMap> {
     print("INIT STATE");
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
-
       updatePinOnMap();
     });
 
     setInitialLocation();
     initAudio();
     setSourceAndDestinationIcons();
+
     isPlaying = false;
 
   }
 
-  void setSourceAndDestinationIcons() async {
-
+  void loadCustomIcons() async
+  {
 
     listenMarker =  await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 25),
@@ -108,6 +108,9 @@ class MapState extends State<TheMap> {
         .then((value) {
       return value;
     });
+
+  }
+  void setSourceAndDestinationIcons()  {
 
     //<JPK> just hacking around here to try to make connection to database
     //below adds to the db
@@ -276,8 +279,10 @@ class MapState extends State<TheMap> {
   void showPinsOnMap() {
     // get a LatLng for the source location
     // from the LocationData currentLocation object
-    var pinPosition =
-        LatLng(currentLocation.latitude, currentLocation.longitude);
+    var pinPosition = LatLng(38.720586, -9.134905);
+
+    if(currentLocation != null)
+      pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     // add the initial source location pin
     _markers.add(Marker(
@@ -301,8 +306,11 @@ class MapState extends State<TheMap> {
     // that a widget update is due
     setState(() {
       // updated position
-      var pinPosition =
-          LatLng(currentLocation.latitude, currentLocation.longitude);
+      var pinPosition = LatLng(38.720586, -9.134905);
+
+      if(currentLocation != null)
+        pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
 
@@ -331,7 +339,7 @@ class MapState extends State<TheMap> {
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
+          //icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
 
           infoWindow: InfoWindow(
             title: Title,
@@ -349,7 +357,7 @@ class MapState extends State<TheMap> {
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
+          //icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
           onTap: () {
             print("Pushed the map button");
             setState(() {
