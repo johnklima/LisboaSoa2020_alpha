@@ -42,6 +42,10 @@ AudioPlayer audioPlayer0 = AudioPlayer();
 AudioPlayer audioPlayer1 = AudioPlayer();
 AudioPlayer audioPlayer2 = AudioPlayer();
 AudioPlayer audioPlayer3 = AudioPlayer();
+AudioPlayer audioPlayer4 = AudioPlayer();
+AudioPlayer audioPlayer5 = AudioPlayer();
+AudioPlayer audioPlayer6 = AudioPlayer();
+AudioPlayer audioPlayer7 = AudioPlayer();
 
 int curAudioPlayer = 0;
 
@@ -104,8 +108,21 @@ Future<void> playTrack(track) async {// may not need to be a future
   if (curAudioPlayer == 3)
     await audioPlayer3.play(track, isLocal: true);
 
+  if (curAudioPlayer == 4)
+    await audioPlayer4.play(track, isLocal: true);
+
+  if (curAudioPlayer == 5)
+    await audioPlayer5.play(track, isLocal: true);
+
+  if (curAudioPlayer == 6)
+    await audioPlayer6.play(track, isLocal: true);
+
+  if (curAudioPlayer == 7)
+    await audioPlayer7.play(track, isLocal: true);
+  
+
   curAudioPlayer++;
-  if(curAudioPlayer > 3)
+  if(curAudioPlayer > 7)
     curAudioPlayer = 0;
 
   /*
