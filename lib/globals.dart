@@ -38,7 +38,12 @@ BitmapDescriptor lisboaSoaMarker;
 //gimme an audio player
 var directory;
 bool isPlaying;
-AudioPlayer audioPlayer = AudioPlayer();
+AudioPlayer audioPlayer0 = AudioPlayer();
+AudioPlayer audioPlayer1 = AudioPlayer();
+AudioPlayer audioPlayer2 = AudioPlayer();
+AudioPlayer audioPlayer3 = AudioPlayer();
+
+int curAudioPlayer = 0;
 
 var eventOverlay;
 var eventName;
@@ -87,8 +92,22 @@ Future<void> playTrack(track) async {// may not need to be a future
   ///
   ///
   /// just play
+  if (curAudioPlayer == 0)
+    await audioPlayer0.play(track, isLocal: true);
 
-  await audioPlayer.play(track, isLocal: true);
+  if (curAudioPlayer == 1)
+    await audioPlayer1.play(track, isLocal: true);
+
+  if (curAudioPlayer == 2)
+    await audioPlayer2.play(track, isLocal: true);
+
+  if (curAudioPlayer == 3)
+    await audioPlayer3.play(track, isLocal: true);
+
+  curAudioPlayer++;
+  if(curAudioPlayer > 3)
+    curAudioPlayer = 0;
+
   /*
     if (!isPlaying){
       await audioPlayer.play(track, isLocal: true);
