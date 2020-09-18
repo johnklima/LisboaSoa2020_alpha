@@ -14,6 +14,7 @@ import 'buttons.dart';
 import 'website.dart';
 import 'map.dart';
 import 'SimpleMap.dart';
+import 'globals.dart' as globals;
 
 import 'record.dart';
 // Import the firebase_core plugin
@@ -23,6 +24,8 @@ void main() async {
   await Firebase.initializeApp();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
+
+    globals.loadStuff();
     runApp(new MyApp());
   });
 }
@@ -41,6 +44,9 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   @override
+
+
+
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Lisboa Soa 2020',

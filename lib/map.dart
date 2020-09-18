@@ -39,7 +39,7 @@ class TheMap extends StatefulWidget {
 
 class MapState extends State<TheMap> {
   Completer<GoogleMapController> _controller = Completer();
-  Set<Marker> _markers = Set<Marker>();
+  //Set<Marker> _markers = Set<Marker>();
 
   ///Custom markers
   BitmapDescriptor listenMarker;
@@ -149,8 +149,7 @@ class MapState extends State<TheMap> {
         String filename = document.data()['filename'];
         String iD = document.id.toString();
         //need to sort which marker i suppose
-        addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,
-            filename);
+        //addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name, filename);
       });
 
 
@@ -255,7 +254,7 @@ class MapState extends State<TheMap> {
               myLocationEnabled: true,
               compassEnabled: false,
               tiltGesturesEnabled: false,
-              markers: _markers,
+              markers: globals.getMarkers(),
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
               onMapCreated: (GoogleMapController controller) {
@@ -285,7 +284,7 @@ class MapState extends State<TheMap> {
       pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     // add the initial source location pin
-    _markers.add(Marker(
+    globals.getMarkers().add(Marker(
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
         icon:lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker ));
@@ -314,8 +313,8 @@ class MapState extends State<TheMap> {
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
 
-      _markers.removeWhere((m) => m.markerId.value == 'sourcePin');
-      _markers.add(
+      globals.getMarkers().removeWhere((m) => m.markerId.value == 'sourcePin');
+      globals.getMarkers().add(
         Marker(
           markerId: MarkerId('sourcePin'),
           position: pinPosition, // updated position
@@ -335,7 +334,7 @@ class MapState extends State<TheMap> {
     if (listen && type == "Listen") {
         print("ADD MARKER " + Title);
         print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
-        _markers.add(
+        globals.getMarkers().add(
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
@@ -353,7 +352,7 @@ class MapState extends State<TheMap> {
     } else if (!listen && type == "Event") {
       print("ADD MARKER " + Title);
       print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
-      _markers.add(
+      globals.getMarkers().add(
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
