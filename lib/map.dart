@@ -56,6 +56,8 @@ class MapState extends State<TheMap> {
   var eventOverlay;
   var eventName;
   var eventUrl;
+  var eventImage;
+  var eventText;
 
   //Current user location
   LocationData currentLocation;
@@ -71,11 +73,7 @@ class MapState extends State<TheMap> {
 
     globals.mapState = this;
 
-    for (final marker in globals.getMarkers())
-    {
 
-
-    }
 
     print(listen);
     location = new Location();
@@ -83,83 +81,21 @@ class MapState extends State<TheMap> {
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
       updatePinOnMap();
+
+
     });
 
     setInitialLocation();
 
-    setSourceAndDestinationIcons();
+    //setSourceAndDestinationIcons();
+
+
+
+    globals.mapState = this;
 
 
 
   }
-
-  void loadCustomIcons() async
-  {
-
-    listenMarker =  await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 25),
-        'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
-        .then((onValue) {
-      return onValue;
-    });
-
-
-    lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(devicePixelRatio: 25),
-        'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
-    // ignore: missing_return
-        .then((value) {
-      return value;
-    });
-
-  }
-  void setSourceAndDestinationIcons()  {
-
-    //<JPK> just hacking around here to try to make connection to database
-    //below adds to the db
-/*
-    GeoFirePoint listenLoc = geo.point(latitude: 38.720586, longitude: -9.135905);
-    GeoFirePoint eventLoc = geo.point(latitude: 38.720586, longitude:  -9.137905);
-    firestore
-        .collection('LocationAudio')
-        .add({'name': 'listen to this', 'position': listenLoc.data, 'Type':'Listen', 'filename': 'blah.m4a'});
-
-    firestore
-        .collection('LocationAudio')
-        .add({'name': 'cool happening', 'position': eventLoc.data,'Type':'Event', 'filename': 'woof.m4a'});
-  */
-
-    //code below reads from the db, and makes new markers?
-    // Create a geoFirePoint for our current location (hacked for now)
-    GeoFirePoint center = geo.point(latitude: 38.720586, longitude: 9.134905);
-
-// get the collection reference or query
-    var collectionReference = firestore.collection('LocationAudio');
-
-    double radius = 500000;
-    String field = 'position';
-
-
-    Stream<List<DocumentSnapshot>> stream = geo.collection(collectionRef: collectionReference)
-        .within(center: center, radius: radius, field: field);
-
-    stream.listen((List<DocumentSnapshot> documentList) {
-      //add the markers
-      documentList.forEach((DocumentSnapshot document) {
-        GeoPoint pos = document.data()['position']['geopoint'];
-        String name = document.data()['name'];
-        String type = document.data()['Type'];
-        String filename = document.data()['filename'];
-        String iD = document.id.toString();
-        //need to sort which marker i suppose
-        //addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name, filename);
-      });
-
-
-    });
-
-  }
-
 
 
   void setInitialLocation() async {
@@ -181,6 +117,14 @@ class MapState extends State<TheMap> {
           tilt: CAMERA_TILT,
           bearing: CAMERA_BEARING);
     }
+
+   Set<Marker> markers = Set<Marker>();
+
+  if(listen)
+    markers = globals.getLMarkers();
+  else
+    markers = globals.getEMarkers();
+
     return Scaffold(
       appBar: AppBar(),
       body: Stack(
@@ -189,7 +133,7 @@ class MapState extends State<TheMap> {
               myLocationEnabled: true,
               compassEnabled: false,
               tiltGesturesEnabled: false,
-              markers: globals.getMarkers(),
+              markers:markers , //globals.getMarkers(),
               mapType: MapType.normal,
               initialCameraPosition: initialCameraPosition,
               onMapCreated: (GoogleMapController controller) {
@@ -203,8 +147,11 @@ class MapState extends State<TheMap> {
                 // my map has completed being created;
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
+
+
+
               }),
-          TheEventPage(globals.eventOverlay, this, globals.eventName, globals.eventUrl),
+          TheEventPage(globals.eventOverlay, this, globals.eventName, globals.eventUrl, globals.eventImage, globals.eventText),
         ],
       ),
     );
@@ -219,11 +166,15 @@ class MapState extends State<TheMap> {
       pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     // add the initial source location pin
-    globals.getMarkers().add(Marker(
+    globals.getLMarkers().add(Marker(
         markerId: MarkerId('sourcePin'),
         position: pinPosition,
-        icon:lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker ));
+        icon:globals.lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : globals.lisboaSoaMarker ));
 
+    globals.getEMarkers().add(Marker(
+        markerId: MarkerId('sourcePin'),
+        position: pinPosition,
+        icon:globals.lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : globals.lisboaSoaMarker ));
 
 
     // destination pin
@@ -248,67 +199,42 @@ class MapState extends State<TheMap> {
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
 
-      globals.getMarkers().removeWhere((m) => m.markerId.value == 'sourcePin');
-      globals.getMarkers().add(
+      globals.getLMarkers().removeWhere((m) => m.markerId.value == 'sourcePin');
+      globals.getEMarkers().removeWhere((m) => m.markerId.value == 'sourcePin');
+
+      globals.getLMarkers().add(
         Marker(
           markerId: MarkerId('sourcePin'),
           position: pinPosition, // updated position
-            icon:lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker ,
+            icon:globals.lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : globals.lisboaSoaMarker ,
           infoWindow: InfoWindow(
             title: "You are here!",
           ),
         ),
       );
-    });
-  }
 
-  /// The map marker types
-  void addMarkers(
-      String markerID, LatLng pos, String type, String Title, String Snippet) {
-
-    if (listen && type == "Listen") {
-        print("ADD MARKER " + Title);
-        print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
-        globals.getMarkers().add(
+      globals.getEMarkers().add(
         Marker(
-          markerId: MarkerId(markerID),
-          position: pos,
-          //icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
-
+          markerId: MarkerId('sourcePin'),
+          position: pinPosition, // updated position
+          icon:globals.lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : globals.lisboaSoaMarker ,
           infoWindow: InfoWindow(
-            title: Title,
-
-            onTap: (){
-              //PressedPlay(Snippet);
-            }
+            title: "You are here!",
           ),
         ),
       );
-    } else if (!listen && type == "Event") {
-      print("ADD MARKER " + Title);
-      print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
-      globals.getMarkers().add(
-        Marker(
-          markerId: MarkerId(markerID),
-          position: pos,
-          //icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
-          onTap: () {
-            print("Pushed the map button");
-            setState(() {
-              eventName = Title;
-              eventUrl = Snippet;
-              eventOverlay = true;
-            });
-          },
-        ),
-      );
-    }
+
+    });
   }
+
+
   void showEventBox()
   {
     setState(() {
       eventName = globals.eventName;
       eventUrl = globals.eventUrl;
+      eventImage = globals.eventImage;
+      eventText = globals.eventText;
       eventOverlay = globals.eventOverlay;
     });
   }
@@ -333,12 +259,15 @@ class TheEventPage extends StatelessWidget {
   final mapState;
   final eventName;
   final eventUrl;
+  final eventImage;
+  final eventText;
   
 
-  TheEventPage(this.active, this.mapState, this.eventName, this.eventUrl);
+  TheEventPage(this.active, this.mapState, this.eventName, this.eventUrl, this.eventImage, this.eventText);
 
   @override
   Widget build(BuildContext context) {
+
     return Container(
       child:((() {
         if (active != null  && active) {
@@ -402,7 +331,7 @@ class TheEventPage extends StatelessWidget {
                                       child: Container(
                                         margin: EdgeInsets.all(5),
                                         child: Text(
-                                          "A small summary about the artist in here...",
+                                          eventText,
                                           style:
                                           Theme.of(context).textTheme.bodyText2,
                                         ),
@@ -416,8 +345,8 @@ class TheEventPage extends StatelessWidget {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         color: const Color(0xff7c94b6),
-                                        image: const DecorationImage(
-                                          image: NetworkImage('https://www.lisboasoa.com/wp-content/uploads/2020/08/banner.jpg'),
+                                        image: DecorationImage(
+                                          image: NetworkImage(eventImage),
                                           fit: BoxFit.cover,
                                         ),
                                         border: Border.all(

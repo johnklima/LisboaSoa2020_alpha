@@ -13,6 +13,8 @@ import 'package:flutter_guid/flutter_guid.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:geoflutterfire/geoflutterfire.dart';
+import 'globals.dart' as globals;
+
 //import 'package:file_picker/file_picker.dart';
 
 import 'buttons.dart';
@@ -54,7 +56,9 @@ class _RecorderState extends State<Recorder> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    print("Hello");
+    print("Hello Recorder");
+
+
 
     location = new Location();
 
@@ -460,6 +464,12 @@ class _RecorderState extends State<Recorder> {
     StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
     print('File Uploaded');
+
+    ///rebuild global list
+      globals.getEMarkers().clear();
+      globals.getLMarkers().clear();
+      globals.setSourceAndDestinationIcons();
+
     storageReference.getDownloadURL().then((fileURL) {
     });
   }

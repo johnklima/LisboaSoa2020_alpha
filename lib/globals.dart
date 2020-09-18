@@ -26,7 +26,9 @@ import "GoogleMaps/MapDesign.dart";
 
 var url = '';
 
-final Set<Marker> _markers = Set<Marker>();
+final Set<Marker> _Lmarkers = Set<Marker>();
+final Set<Marker> _Emarkers = Set<Marker>();
+
 FirebaseFirestore firestore;
 Geoflutterfire geo;
 ///Custom markers
@@ -41,6 +43,8 @@ AudioPlayer audioPlayer = AudioPlayer();
 var eventOverlay;
 var eventName;
 var eventUrl;
+String eventImage;
+String eventText;
 
 themap.MapState mapState;
 
@@ -115,7 +119,8 @@ Future <int> PressedPlay(trackName) async {
 
 void loadStuff()
 {
-  _markers.clear();
+  _Lmarkers.clear();
+  _Emarkers.clear();
 
   //gimme firestore
    firestore = FirebaseFirestore.instance;
@@ -128,11 +133,14 @@ void loadStuff()
 
 
 }
-Set<Marker> getMarkers()
+Set<Marker> getLMarkers()
 {
- return _markers;
+ return _Lmarkers;
 }
-
+Set<Marker> getEMarkers()
+{
+  return _Emarkers;
+}
 void loadCustomIcons() async
 {
 
@@ -159,7 +167,7 @@ void loadCustomIcons() async
 
 /// The map marker types
 Marker addMarkers(
-    String markerID, LatLng pos, String type, String Title, String Snippet)
+    String markerID, LatLng pos, String type, String Title, String Snippet, String image, String text)
 {
 
   if (type == "Listen")
@@ -182,7 +190,7 @@ Marker addMarkers(
           }
       ),
     );
-    _markers.add(marker);
+    _Lmarkers.add(marker);
   }
 
   if (type == "Event")
@@ -195,7 +203,7 @@ Marker addMarkers(
       position: pos,
       icon: listenMarker == null
           ? BitmapDescriptor.defaultMarker
-          : listenMarker, //Should be controlled by the type
+          : lisboaSoaMarker, //Should be controlled by the type
 
       infoWindow: InfoWindow(
           title: Title,
@@ -204,12 +212,14 @@ Marker addMarkers(
             print("Pushed the map button");
             eventName = Title;
             eventUrl = Snippet;
+            eventImage = image;
+            eventText = text;
             eventOverlay = true;
             mapState.showEventBox();
           }
       ),
     );
-    _markers.add(marker);
+    _Emarkers.add(marker);
   }
 }
 
@@ -251,10 +261,12 @@ void setSourceAndDestinationIcons()  {
       String name = document.data()['name'];
       String type = document.data()['Type'];
       String filename = document.data()['filename'];
+      String image = document.data()['imageurl'];
+      String text = document.data()['text'];
       String iD = document.id.toString();
       //need to sort which marker i suppose
       addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,
-          filename);
+          filename, image, text);
 
     }
   });
