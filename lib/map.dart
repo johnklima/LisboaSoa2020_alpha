@@ -1,3 +1,4 @@
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
@@ -184,9 +185,11 @@ class MapState extends State<TheMap> {
       print(e);
     }
   }
-  PressedPlay(trackName) async {
+
+  Future <int> PressedPlay(trackName) async {
     var track = await downloadFile(trackName); // should replace track2 with trackName which should be the contents(text) of the button
     playTrack(track);
+    return 1;
   }
 
   Future<void> playTrack(track) async {// may not need to be a future

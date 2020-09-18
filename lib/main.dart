@@ -117,7 +117,7 @@ class HomePage extends StatelessWidget {
                   Container(
 //I have added a buttons.dart where I keep the button widgets,
 //NavigateTo is such a button, look in buttons.dart for more.
-                    child:NavigateTo(SimpleMap(), "listen"), // NavigateTo(TheMap(true), "listen"),
+                    child:NavigateTo(TheMap(true), "listen"), // NavigateTo(TheMap(true), "listen"),
                   ),
                   Container(
                     child: NavigateTo(Recorder(), "record"),

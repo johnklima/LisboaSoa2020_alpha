@@ -2,6 +2,14 @@
 
 
 library my_prj.globals;
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'dart:async';
+import 'dart:io';
+import 'dart:io' as io;
+//import 'package:lisboasoa2020/buttons.dart';
+//import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'website.dart';
@@ -11,11 +19,17 @@ import 'package:geoflutterfire/geoflutterfire.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
+
+import "GoogleMaps/MapDesign.dart";
+
 var url = '';
 
 final Set<Marker> _markers = Set<Marker>();
 FirebaseFirestore firestore;
 Geoflutterfire geo;
+///Custom markers
+BitmapDescriptor listenMarker;
+BitmapDescriptor lisboaSoaMarker;
 
 void loadStuff()
 {
@@ -25,8 +39,9 @@ void loadStuff()
    firestore = FirebaseFirestore.instance;
 
    geo = Geoflutterfire();
-
-  setSourceAndDestinationIcons();
+   
+   loadCustomIcons();
+   setSourceAndDestinationIcons();
 
 
 }
@@ -34,8 +49,29 @@ Set<Marker> getMarkers()
 {
  return _markers;
 }
+
+void loadCustomIcons() async
+{
+
+  listenMarker =  await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 25),
+      'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
+      .then((onValue) {
+    return onValue;
+  });
+
+
+  lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
+      ImageConfiguration(devicePixelRatio: 25),
+      'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
+  // ignore: missing_return
+      .then((value) {
+    return value;
+  });
+
+}
 /// The map marker types
-void addMarkers(
+Marker addMarkers(
     String markerID, LatLng pos, String type, String Title, String Snippet)
 {
 
@@ -46,7 +82,7 @@ void addMarkers(
   final marker = Marker(
     markerId: MarkerId(markerID),
     position: pos,
-    //icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
+    icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
 
     infoWindow: InfoWindow(
         title: Title,
@@ -57,6 +93,7 @@ void addMarkers(
     ),
   );
   _markers.add(marker);
+  return marker;
 }
 void setSourceAndDestinationIcons()  {
 
@@ -100,6 +137,7 @@ void setSourceAndDestinationIcons()  {
       //need to sort which marker i suppose
       addMarkers(iD, LatLng(pos.latitude, pos.longitude), type, name,
           filename);
+
     }
 
   });
