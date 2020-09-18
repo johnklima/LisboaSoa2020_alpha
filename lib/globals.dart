@@ -39,7 +39,7 @@ void loadStuff()
    firestore = FirebaseFirestore.instance;
 
    geo = Geoflutterfire();
-   
+
    loadCustomIcons();
    setSourceAndDestinationIcons();
 
@@ -54,7 +54,7 @@ void loadCustomIcons() async
 {
 
   listenMarker =  await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 25),
+      ImageConfiguration(devicePixelRatio: 5),
       'assets/MapMarkers/LisboaSoa_ListenMarker_Small.png')
       .then((onValue) {
     return onValue;
@@ -62,7 +62,7 @@ void loadCustomIcons() async
 
 
   lisboaSoaMarker = await BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(devicePixelRatio: 25),
+      ImageConfiguration(devicePixelRatio: 5),
       'assets/MapMarkers/LisboaSoa_SoaMarker_Small.png')
   // ignore: missing_return
       .then((value) {
