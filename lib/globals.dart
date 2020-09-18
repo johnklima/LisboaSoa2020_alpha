@@ -20,6 +20,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 
+import 'map.dart' as themap;
+
 import "GoogleMaps/MapDesign.dart";
 
 var url = '';
@@ -36,6 +38,11 @@ var directory;
 bool isPlaying;
 AudioPlayer audioPlayer = AudioPlayer();
 
+var eventOverlay;
+var eventName;
+var eventUrl;
+
+themap.MapState mapState;
 
 /// This is the same function that is called in "recorder.dart"
 /// it collects the devices directory, should perhaps be made into its
@@ -146,30 +153,64 @@ void loadCustomIcons() async
   });
 
 }
+
+
+
+
 /// The map marker types
 Marker addMarkers(
     String markerID, LatLng pos, String type, String Title, String Snippet)
 {
 
+  if (type == "Listen")
+  {
+    print("ADD MARKER " + Title);
+    print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString());
 
-  print("ADD MARKER " + Title);
-  print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString() );
+    final marker = Marker(
+      markerId: MarkerId(markerID),
+      position: pos,
+      icon: listenMarker == null
+          ? BitmapDescriptor.defaultMarker
+          : listenMarker, //Should be controlled by the type
 
-  final marker = Marker(
-    markerId: MarkerId(markerID),
-    position: pos,
-    icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
+      infoWindow: InfoWindow(
+          title: Title,
 
-    infoWindow: InfoWindow(
-        title: Title,
+          onTap: () {
+            PressedPlay(Snippet);
+          }
+      ),
+    );
+    _markers.add(marker);
+  }
 
-        onTap: (){
-          PressedPlay(Snippet);
-        }
-    ),
-  );
-  _markers.add(marker);
-  return marker;
+  if (type == "Event")
+  {
+    print("ADD MARKER " + Title);
+    print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString());
+
+    final marker = Marker(
+      markerId: MarkerId(markerID),
+      position: pos,
+      icon: listenMarker == null
+          ? BitmapDescriptor.defaultMarker
+          : listenMarker, //Should be controlled by the type
+
+      infoWindow: InfoWindow(
+          title: Title,
+
+          onTap: () {
+            print("Pushed the map button");
+            eventName = Title;
+            eventUrl = Snippet;
+            eventOverlay = true;
+            mapState.showEventBox();
+          }
+      ),
+    );
+    _markers.add(marker);
+  }
 }
 
 void setSourceAndDestinationIcons()  {

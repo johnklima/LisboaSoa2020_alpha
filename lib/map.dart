@@ -42,6 +42,7 @@ class MapState extends State<TheMap> {
   Completer<GoogleMapController> _controller = Completer();
   //Set<Marker> _markers = Set<Marker>();
 
+
   ///Custom markers
   BitmapDescriptor listenMarker;
   BitmapDescriptor lisboaSoaMarker;
@@ -51,11 +52,6 @@ class MapState extends State<TheMap> {
 
   Geoflutterfire geo = Geoflutterfire();
 
-  //gimme an audio player
-  var directory;
-  bool isPlaying;
-
-  AudioPlayer audioPlayer = AudioPlayer();
 
   var eventOverlay;
   var eventName;
@@ -73,6 +69,8 @@ class MapState extends State<TheMap> {
   void initState() {
     super.initState();
 
+    globals.mapState = this;
+
     for (final marker in globals.getMarkers())
     {
 
@@ -88,10 +86,10 @@ class MapState extends State<TheMap> {
     });
 
     setInitialLocation();
-    initAudio();
+
     setSourceAndDestinationIcons();
 
-    isPlaying = false;
+
 
   }
 
@@ -162,77 +160,7 @@ class MapState extends State<TheMap> {
 
   }
 
-  /// This is the same function that is called in "recorder.dart"
-  /// it collects the devices directory, should perhaps be made into its
-  /// own dart file so it can be called when it's needed and only be
-  /// called once ?.
-  initAudio() async {
-    try {
-      if (await Permission.storage.request().isGranted
-          && await Permission.mediaLibrary.request().isGranted
-      ) {
-        io.Directory appDocDirectory;
-//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
-        if (io.Platform.isIOS) {
-          appDocDirectory = await getApplicationDocumentsDirectory();
-          directory = appDocDirectory;
-        } else {
-          appDocDirectory = await getExternalStorageDirectory();
-          directory = appDocDirectory;
-          print(directory);
-        }
-      } else {
-        Scaffold.of(context).showSnackBar(
-            new SnackBar(content: new Text("You must accept permissions")));
-      }
-    } catch (e) {
-      print(e);
-    }
-  }
 
-  Future <int> PressedPlay(trackName) async {
-    var track = await downloadFile(trackName); // should replace track2 with trackName which should be the contents(text) of the button
-    playTrack(track);
-    return 1;
-  }
-
-  Future<void> playTrack(track) async {// may not need to be a future
-
-    ///TODO:
-    ///<JPK> we will need an isplaying array, or a class or something so we can
-    ///start and stop multiple audio files.
-    ///OR simplest thing is no stop at all, just play play play.
-
-    /// added a simple if check to make the audio stop when pressed again.
-    /// also moved the AudioPlayer up so that it wouldn't create a new
-    /// reference for each time we called it. (this what caused the
-    /// audio going on top of each other.
-    ///
-    ///
-    /// just play
-
-    await audioPlayer.play(track, isLocal: true);
-    /*
-    if (!isPlaying){
-      await audioPlayer.play(track, isLocal: true);
-      isPlaying = true;
-    }
-    else{
-      await audioPlayer.stop();
-      isPlaying = false;
-    }
-
-     */
-  }
-
-  Future<String> downloadFile(String trackName) async {
-    final Directory tempDir = directory;
-    final File file = File('${tempDir.path}/$trackName');
-    final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
-    final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
-    final int byteNumber = (await downloadTask.future).totalByteCount;
-    return '${tempDir.path}/$trackName';
-  }
 
   void setInitialLocation() async {
     currentLocation = await location.getLocation();
@@ -276,7 +204,7 @@ class MapState extends State<TheMap> {
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          TheEventPage(eventOverlay, this, eventName, eventUrl),
+          TheEventPage(globals.eventOverlay, this, globals.eventName, globals.eventUrl),
         ],
       ),
     );
@@ -351,7 +279,7 @@ class MapState extends State<TheMap> {
             title: Title,
 
             onTap: (){
-              PressedPlay(Snippet);
+              //PressedPlay(Snippet);
             }
           ),
         ),
@@ -376,8 +304,16 @@ class MapState extends State<TheMap> {
       );
     }
   }
-
+  void showEventBox()
+  {
+    setState(() {
+      eventName = globals.eventName;
+      eventUrl = globals.eventUrl;
+      eventOverlay = globals.eventOverlay;
+    });
+  }
   void backButton() {
+    globals.eventOverlay = false;
     setState(() {
       eventOverlay = false;
     });
