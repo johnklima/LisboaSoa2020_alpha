@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-
+import 'globals.dart' as globals;
 //To the Home Page
 
 class Website extends StatefulWidget {
@@ -59,7 +59,8 @@ class EventPagePage extends StatelessWidget {
     return Container(
       child: WebView(
         /// This should be changed to return the relevant artist or event.
-        initialUrl: 'http://www.lisboasoa.com/program2020/',
+        /// JPK hacky...
+        initialUrl: globals.url,//'/http://www.lisboasoa.com/calendar-2020/',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

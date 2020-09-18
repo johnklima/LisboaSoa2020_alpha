@@ -17,6 +17,8 @@ import 'package:path_provider/path_provider.dart';
 
 import "GoogleMaps/MapDesign.dart";
 
+import 'globals.dart' as globals;
+
 const double CAMERA_ZOOM = 15;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
@@ -56,6 +58,8 @@ class MapState extends State<TheMap> {
 
   var eventOverlay;
   var eventName;
+  var eventUrl;
+
   //Current user location
   LocationData currentLocation;
 
@@ -75,19 +79,19 @@ class MapState extends State<TheMap> {
     print("INIT STATE");
     location.onLocationChanged.listen((LocationData cLoc) {
       currentLocation = cLoc;
-
       updatePinOnMap();
     });
 
     setInitialLocation();
     initAudio();
     setSourceAndDestinationIcons();
+
     isPlaying = false;
 
   }
 
-  void setSourceAndDestinationIcons() async {
-
+  void loadCustomIcons() async
+  {
 
     listenMarker =  await BitmapDescriptor.fromAssetImage(
         ImageConfiguration(devicePixelRatio: 25),
@@ -104,6 +108,9 @@ class MapState extends State<TheMap> {
         .then((value) {
       return value;
     });
+
+  }
+  void setSourceAndDestinationIcons()  {
 
     //<JPK> just hacking around here to try to make connection to database
     //below adds to the db
@@ -263,7 +270,7 @@ class MapState extends State<TheMap> {
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          TheEventPage(eventOverlay, this, eventName),
+          TheEventPage(eventOverlay, this, eventName, eventUrl),
         ],
       ),
     );
@@ -272,8 +279,10 @@ class MapState extends State<TheMap> {
   void showPinsOnMap() {
     // get a LatLng for the source location
     // from the LocationData currentLocation object
-    var pinPosition =
-        LatLng(currentLocation.latitude, currentLocation.longitude);
+    var pinPosition = LatLng(38.720586, -9.134905);
+
+    if(currentLocation != null)
+      pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
     // get a LatLng out of the LocationData object
     // add the initial source location pin
     _markers.add(Marker(
@@ -297,8 +306,11 @@ class MapState extends State<TheMap> {
     // that a widget update is due
     setState(() {
       // updated position
-      var pinPosition =
-          LatLng(currentLocation.latitude, currentLocation.longitude);
+      var pinPosition = LatLng(38.720586, -9.134905);
+
+      if(currentLocation != null)
+        pinPosition = LatLng(currentLocation.latitude, currentLocation.longitude);
+
       // the trick is to remove the marker (by id)
       // and add it again at the updated location
 
@@ -327,7 +339,7 @@ class MapState extends State<TheMap> {
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
+          //icon: listenMarker == null?BitmapDescriptor.defaultMarker : listenMarker, //Should be controlled by the type
 
           infoWindow: InfoWindow(
             title: Title,
@@ -345,11 +357,12 @@ class MapState extends State<TheMap> {
         Marker(
           markerId: MarkerId(markerID),
           position: pos,
-          icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
+          //icon: lisboaSoaMarker == null?BitmapDescriptor.defaultMarker : lisboaSoaMarker, //Should be controlled by the type
           onTap: () {
             print("Pushed the map button");
             setState(() {
               eventName = Title;
+              eventUrl = Snippet;
               eventOverlay = true;
             });
           },
@@ -377,9 +390,10 @@ class TheEventPage extends StatelessWidget {
   final active;
   final mapState;
   final eventName;
+  final eventUrl;
   
 
-  TheEventPage(this.active, this.mapState, this.eventName);
+  TheEventPage(this.active, this.mapState, this.eventName, this.eventUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -520,6 +534,7 @@ class TheEventPage extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(25.0),
                                       ),
                                       onPressed: () {
+                                        globals.url = eventUrl;
                                         mapState.eventWebPage();
                                       },
                                     ),
