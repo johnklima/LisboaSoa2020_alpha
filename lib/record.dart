@@ -320,6 +320,7 @@ class _RecorderState extends State<Recorder> {
         loc = appDocDirectory.path + "/" + guid;
 
         DocDir = appDocDirectory.path;
+
         print("This is the Doc Dir !!!! " + DocDir);
 
         // .wav <---> AudioFormat.WAV
@@ -339,8 +340,8 @@ class _RecorderState extends State<Recorder> {
           print(_currentStatus);
         });
       } else {
-        Scaffold.of(context).showSnackBar(
-            new SnackBar(content: new Text("You must accept permissions")));
+        //Scaffold.of(context).showSnackBar(
+        //    new SnackBar(content: new Text("You must accept permissions")));
       }
     } catch (e) {
       print(e);

@@ -119,7 +119,7 @@ Future<void> playTrack(track) async {// may not need to be a future
 
   if (curAudioPlayer == 7)
     await audioPlayer7.play(track, isLocal: true);
-  
+
 
   curAudioPlayer++;
   if(curAudioPlayer > 7)
