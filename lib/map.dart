@@ -17,6 +17,8 @@ import 'package:path_provider/path_provider.dart';
 
 import "GoogleMaps/MapDesign.dart";
 
+import 'globals.dart' as globals;
+
 const double CAMERA_ZOOM = 15;
 const double CAMERA_TILT = 40;
 const double CAMERA_BEARING = 30;
@@ -56,6 +58,8 @@ class MapState extends State<TheMap> {
 
   var eventOverlay;
   var eventName;
+  var eventUrl;
+
   //Current user location
   LocationData currentLocation;
 
@@ -263,7 +267,7 @@ class MapState extends State<TheMap> {
                 // i'm ready to show the pins on the map
                 showPinsOnMap();
               }),
-          TheEventPage(eventOverlay, this, eventName),
+          TheEventPage(eventOverlay, this, eventName, eventUrl),
         ],
       ),
     );
@@ -350,6 +354,7 @@ class MapState extends State<TheMap> {
             print("Pushed the map button");
             setState(() {
               eventName = Title;
+              eventUrl = Snippet;
               eventOverlay = true;
             });
           },
@@ -377,9 +382,10 @@ class TheEventPage extends StatelessWidget {
   final active;
   final mapState;
   final eventName;
+  final eventUrl;
   
 
-  TheEventPage(this.active, this.mapState, this.eventName);
+  TheEventPage(this.active, this.mapState, this.eventName, this.eventUrl);
 
   @override
   Widget build(BuildContext context) {
@@ -520,6 +526,7 @@ class TheEventPage extends StatelessWidget {
                                         borderRadius: BorderRadius.circular(25.0),
                                       ),
                                       onPressed: () {
+                                        globals.url = eventUrl;
                                         mapState.eventWebPage();
                                       },
                                     ),
