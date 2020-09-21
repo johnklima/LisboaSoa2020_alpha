@@ -36,9 +36,9 @@
 	<key>NSContactsUsageDescription</key>
 	<string>This app wants to access your contacts, but we are not doing that, so please say yes.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>This app needs access to location when open and in the background.</string>
+	<string>This app needs access to location when open and in the background. We need this info to help you find events near you.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string>This app needs access to location when in the background.</string>
+	<string>This app needs access to location when in the background. We need this info to help you find events near you.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>This app needs access to location in the background.</string>
 	<key>NSMicrophoneUsageDescription</key>
