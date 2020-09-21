@@ -138,6 +138,12 @@ Future<void> playTrack(track) async {// may not need to be a future
 }
 
 Future<String> downloadFile(String trackName) async {
+
+
+  ///try to just hardcode the url
+  ///
+
+  return "https://firebasestorage.googleapis.com/v0/b/applied-tractor-279610.appspot.com/o/" + trackName;
   final Directory tempDir = directory;
   final File file = File('${tempDir.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
