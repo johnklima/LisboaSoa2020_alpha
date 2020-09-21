@@ -26,7 +26,7 @@ class WebsitePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: WebView(
-        initialUrl: 'https://www.lisboasoa.com/',
+        initialUrl: 'http://www.lisboasoa.com/calendar-2020/',
         javascriptMode: JavascriptMode.unrestricted,
       ),
     );

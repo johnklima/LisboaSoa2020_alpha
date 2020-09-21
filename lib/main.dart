@@ -151,7 +151,7 @@ class HomePage extends StatelessWidget {
                     margin: EdgeInsets.fromLTRB(0, 0, 25, 0),
                     child: Image(
                       image:
-                          AssetImage("assets/Graphic/LisboaSoa_Text_Home.png"),
+                          AssetImage("assets/MapMarkers/LisboaSoa_SoaMarker_Medium_2.png"),
                       alignment: Alignment.topRight,
                       width: 50,
                       height: 50,
