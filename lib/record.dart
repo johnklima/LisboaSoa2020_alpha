@@ -436,7 +436,7 @@ class _RecorderState extends State<Recorder> {
   void saveToJson() {
 
     if (recordingName == null){
-      print(recordingName);
+      print('recording name null');
     }
     else{
       print(recordingName);

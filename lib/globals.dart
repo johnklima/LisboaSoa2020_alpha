@@ -19,6 +19,7 @@ import 'package:audioplayers/audioplayers.dart';
 import 'package:path_provider/path_provider.dart';
 
 import 'map.dart' as themap;
+import 'main.dart';
 
 import "GoogleMaps/MapDesign.dart";
 
@@ -60,19 +61,24 @@ themap.MapState mapState;
 /// own dart file so it can be called when it's needed and only be
 /// called once ?.
 initAudio() async {
+
+  print('---------------> init audio' + MyApp().localFileSystem.systemTempDirectory.path);
+
+
   try {
     if (await Permission.storage.request().isGranted
         && await Permission.mediaLibrary.request().isGranted
     ) {
+      print( "granted ");
       io.Directory appDocDirectory;
       if (io.Platform.isIOS) {
         appDocDirectory = await getApplicationDocumentsDirectory();
         directory = appDocDirectory;
-        print(appDocDirectory.path);
+        print("the path is " + appDocDirectory.path);
       } else {
         appDocDirectory = await getExternalStorageDirectory();
         directory = appDocDirectory;
-        print(appDocDirectory.path);
+        print("the path is " + appDocDirectory.path);
       }
     }
   } catch (e) {
