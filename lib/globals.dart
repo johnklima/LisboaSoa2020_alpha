@@ -71,6 +71,7 @@ initAudio() async {
       if (io.Platform.isIOS) {
         appDocDirectory = await getApplicationDocumentsDirectory();
         directory = appDocDirectory;
+        print(directory);
       } else {
         appDocDirectory = await getExternalStorageDirectory();
         directory = appDocDirectory;
@@ -210,6 +211,7 @@ Marker addMarkers(
   {
     print("ADD MARKER " + Title);
     print("LOC " + pos.latitude.toString() + " " + pos.longitude.toString());
+    print(Snippet);
 
     final marker = Marker(
       markerId: MarkerId(markerID),
