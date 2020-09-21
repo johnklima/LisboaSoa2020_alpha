@@ -34,7 +34,7 @@ BitmapDescriptor listenMarker;
 BitmapDescriptor lisboaSoaMarker;
 
 //gimme an audio player
-var directory;
+io.Directory directory;
 bool isPlaying;
 AudioPlayer audioPlayer0 = AudioPlayer();
 AudioPlayer audioPlayer1 = AudioPlayer();
@@ -65,15 +65,14 @@ initAudio() async {
         && await Permission.mediaLibrary.request().isGranted
     ) {
       io.Directory appDocDirectory;
-//        io.Directory appDocDirectory = await getApplicationDocumentsDirectory();
       if (io.Platform.isIOS) {
         appDocDirectory = await getApplicationDocumentsDirectory();
         directory = appDocDirectory;
-        print(directory);
+        print(appDocDirectory.path);
       } else {
         appDocDirectory = await getExternalStorageDirectory();
         directory = appDocDirectory;
-        print(directory);
+        print(appDocDirectory.path);
       }
     }
   } catch (e) {
@@ -139,11 +138,6 @@ Future<void> playTrack(track) async {// may not need to be a future
 
 Future<String> downloadFile(String trackName) async {
 
-
-  ///try to just hardcode the url
-  ///
-
-  return "https://firebasestorage.googleapis.com/v0/b/applied-tractor-279610.appspot.com/o/" + trackName;
   final Directory tempDir = directory;
   final File file = File('${tempDir.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
