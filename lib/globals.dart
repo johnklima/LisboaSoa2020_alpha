@@ -138,7 +138,7 @@ Future<void> playTrack(track) async {// may not need to be a future
 
 Future<String> downloadFile(String trackName) async {
 
-  final Directory tempDir = directory;
+  final io.Directory tempDir = directory;
   final File file = File('${tempDir.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
   final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
