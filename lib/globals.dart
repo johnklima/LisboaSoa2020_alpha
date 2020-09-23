@@ -144,13 +144,15 @@ Future<void> playTrack(track) async {// may not need to be a future
 
 Future<String> downloadFile(String trackName) async {
 
+
+  /*
   final File file = File( '${MyApp().localFileSystem.systemTempDirectory.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
   final StorageFileDownloadTask downloadTask = ref.writeToFile(file);
   final int byteNumber = (await downloadTask.future).totalByteCount;
   return '${MyApp().localFileSystem.systemTempDirectory.path}/$trackName';
+  */
 
-  /*
   final io.Directory tempDir = directory;
   final File file = File('${tempDir.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
@@ -158,7 +160,7 @@ Future<String> downloadFile(String trackName) async {
   final int byteNumber = (await downloadTask.future).totalByteCount;
   return '${tempDir.path}/$trackName';
 
-   */
+
 }
 
 Future <int> PressedPlay(trackName) async {
