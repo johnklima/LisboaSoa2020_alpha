@@ -317,7 +317,7 @@ class _RecorderState extends State<Recorder> {
         Guid iD = Guid.newGuid;
         guid = iD.value;
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        loc = appDocDirectory.path + "/" + guid ;
+        loc = appDocDirectory.path + "/" + guid + "m4a" ;
 
         DocDir = appDocDirectory.path;
 
