@@ -317,7 +317,7 @@ class _RecorderState extends State<Recorder> {
         Guid iD = Guid.newGuid;
         guid = iD.value;
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        loc = appDocDirectory.path + "/" + guid + "m4a" ;
+        loc = appDocDirectory.path + "/" + guid ;
 
         DocDir = appDocDirectory.path;
 
@@ -446,7 +446,7 @@ class _RecorderState extends State<Recorder> {
 
       firestore
           .collection('LocationAudio')
-          .add({'name': recordingName , 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid});
+          .add({'name': recordingName , 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid + ".m4a"});
 
       uploadFile();
     }
@@ -461,7 +461,7 @@ class _RecorderState extends State<Recorder> {
 
       StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child(guid);
+        .child(guid + ".m4a");
     StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
     print('File Uploaded');
