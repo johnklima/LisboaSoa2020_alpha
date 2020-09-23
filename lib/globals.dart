@@ -37,14 +37,14 @@ BitmapDescriptor lisboaSoaMarker;
 //gimme an audio player
 io.Directory directory;
 bool isPlaying;
-AudioPlayer audioPlayer0 = AudioPlayer();
-AudioPlayer audioPlayer1 = AudioPlayer();
-AudioPlayer audioPlayer2 = AudioPlayer();
-AudioPlayer audioPlayer3 = AudioPlayer();
-AudioPlayer audioPlayer4 = AudioPlayer();
-AudioPlayer audioPlayer5 = AudioPlayer();
-AudioPlayer audioPlayer6 = AudioPlayer();
-AudioPlayer audioPlayer7 = AudioPlayer();
+AudioPlayer audioPlayer0  ;
+AudioPlayer audioPlayer1  ;
+AudioPlayer audioPlayer2 ;
+AudioPlayer audioPlayer3  ;
+AudioPlayer audioPlayer4 ;
+AudioPlayer audioPlayer5  ;
+AudioPlayer audioPlayer6  ;
+AudioPlayer audioPlayer7  ;
 
 int curAudioPlayer = 0;
 
@@ -84,6 +84,16 @@ initAudio() async {
   } catch (e) {
     print(e);
   }
+
+  audioPlayer0 = AudioPlayer();
+  audioPlayer1 = AudioPlayer();
+  audioPlayer2 = AudioPlayer();
+  audioPlayer3 = AudioPlayer();
+  audioPlayer4 = AudioPlayer();
+  audioPlayer5 = AudioPlayer();
+  audioPlayer6 = AudioPlayer();
+  audioPlayer7 = AudioPlayer();
+
 }
 
 Future<void> playTrack(track) async {// may not need to be a future
