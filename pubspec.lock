@@ -39,10 +39,12 @@ packages:
   audioplayers:
     dependency: "direct main"
     description:
-      name: audioplayers
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.15.1"
+      path: "."
+      ref: HEAD
+      resolved-ref: "79e9ab638161621293be34f23eeba3440d618a2f"
+      url: "git://github.com/luanpotter/audioplayers.git"
+    source: git
+    version: "0.16.1"
   basic_utils:
     dependency: transitive
     description:
@@ -225,6 +227,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
+  ffi:
+    dependency: transitive
+    description:
+      name: ffi
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.3"
   file:
     dependency: transitive
     description:
@@ -306,7 +315,7 @@ packages:
       name: flutter_plugin_android_lifecycle
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.9"
+    version: "1.0.11"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -351,7 +360,7 @@ packages:
       name: google_maps_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.32"
+    version: "0.5.33"
   google_maps_flutter_platform_interface:
     dependency: transitive
     description:
@@ -505,7 +514,7 @@ packages:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.14"
+    version: "1.6.18"
   path_provider_linux:
     dependency: transitive
     description:
@@ -527,6 +536,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.3"
+  path_provider_windows:
+    dependency: transitive
+    description:
+      name: path_provider_windows
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.4+1"
   pedantic:
     dependency: transitive
     description:
@@ -748,7 +764,14 @@ packages:
       name: webview_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.3.22+1"
+    version: "0.3.24"
+  win32:
+    dependency: transitive
+    description:
+      name: win32
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.7.3"
   xdg_directories:
     dependency: transitive
     description:

@@ -414,7 +414,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  audioplayers: 84f968cea3f2deab00ec4f8ff53358b3c0b3992c
+  audioplayers: 53f0f30789b10ab2009771c6c79def00980945e4
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   cloud_firestore: b054ccc068b5907645c32b669d38e82db2a11fc7
   Firebase: 7cf5f9c67f03cb3b606d1d6535286e1080e57eb6

@@ -34,7 +34,12 @@ dependencies:
   flutter_audio_recorder:
   # path_provider:
   permission_handler:
-  audioplayers: 0.15.1
+  # audioplayers: 0.15.1
+
+  audioplayers:
+    git:
+      url: git://github.com/luanpotter/audioplayers.git
+
   geolocator:
   location:
   flutter_guid:
