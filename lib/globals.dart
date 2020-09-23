@@ -100,6 +100,9 @@ Future<void> playTrack(track) async {// may not need to be a future
   ///
   ///
   /// just play
+
+	print('play the track') ;
+
   if (curAudioPlayer == 0)
     await audioPlayer0.play(track, isLocal: true);
 
@@ -153,6 +156,9 @@ Future<String> downloadFile(String trackName) async {
   return '${MyApp().localFileSystem.systemTempDirectory.path}/$trackName';
   */
 
+
+print('download the file') ;
+
   final io.Directory tempDir = directory;
   final File file = File('${tempDir.path}/$trackName');
   final StorageReference ref = FirebaseStorage.instance.ref().child('${trackName}');
@@ -164,6 +170,9 @@ Future<String> downloadFile(String trackName) async {
 }
 
 Future <int> PressedPlay(trackName) async {
+
+print('pressed play') ;
+
   var track = await downloadFile(trackName); // should replace track2 with trackName which should be the contents(text) of the button
   playTrack(track);
   return 1;
@@ -239,6 +248,7 @@ Marker addMarkers(
           title: Title,
 
           onTap: () {
+		print('On Tap') ;
             PressedPlay(Snippet);
           }
       ),
