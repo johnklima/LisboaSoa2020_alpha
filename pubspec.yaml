@@ -26,22 +26,22 @@ dependencies:
 
   google_maps_flutter: ^0.5.32
   http: ^0.12.0+1
-  json_serializable: ^3.3.0
+  # json_serializable: ^3.3.0
   geoflutterfire:
 
 
   # added dependencies. (Recorder system)
   flutter_audio_recorder:
-  path_provider:
+  # path_provider:
   permission_handler:
   audioplayers: ^0.16.1
   geolocator:
   location:
   flutter_guid:
   uuid:
-  json_annotation:
-  flutter_calendar_carousel:
-  maps_toolkit:
+  #json_annotation:
+  #flutter_calendar_carousel:
+  #maps_toolkit:
   # <JPK> im not using versions here, lets see if it does not make things simpler
   cloud_firestore:
   firebase_storage:
@@ -49,7 +49,7 @@ dependencies:
   firebase_database:
   #audioplayer2: ^0.5.2
   webview_flutter:
-  file_picker:
+  #file_picker:
 
 
 
@@ -65,7 +65,7 @@ dev_dependencies:
     sdk: flutter
   build_runner: ^1.0.0
   # This might have to be in dependencies later ?
-  json_serializable: ^3.3.0
+  # json_serializable: ^3.3.0
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

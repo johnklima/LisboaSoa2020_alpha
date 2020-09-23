@@ -13,7 +13,7 @@ import 'buttons.dart';
 
 import 'website.dart';
 import 'map.dart';
-import 'SimpleMap.dart';
+
 import 'globals.dart' as globals;
 
 import 'record.dart';

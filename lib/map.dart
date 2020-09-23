@@ -4,17 +4,17 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:io';
 import 'dart:io' as io;
-//import 'package:lisboasoa2020/buttons.dart';
-//import 'package:maps_toolkit/maps_toolkit.dart' as mp;
+///import 'package:lisboasoa2020/buttons.dart';
+///import 'package:maps_toolkit/maps_toolkit.dart' as mp;
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
 import 'website.dart';
-import 'package:firebase_storage/firebase_storage.dart';
+///import 'package:firebase_storage/firebase_storage.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
 import 'package:geoflutterfire/geoflutterfire.dart';
-import 'package:permission_handler/permission_handler.dart';
-import 'package:audioplayers/audioplayers.dart';
-import 'package:path_provider/path_provider.dart';
+///import 'package:permission_handler/permission_handler.dart';
+///import 'package:audioplayers/audioplayers.dart';
+///import 'package:path_provider/path_provider.dart';
 
 import "GoogleMaps/MapDesign.dart";
 
