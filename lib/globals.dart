@@ -302,16 +302,186 @@ void setSourceAndDestinationIcons()  {
   //below adds to the db
 /*
     GeoFirePoint listenLoc = geo.point(latitude: 38.720586, longitude: -9.135905);
-    GeoFirePoint eventLoc = geo.point(latitude: 38.720586, longitude:  -9.137905);
+
     firestore
         .collection('LocationAudio')
         .add({'name': 'listen to this', 'position': listenLoc.data, 'Type':'Listen', 'filename': 'blah.m4a'});
+*/
 
+/*
+
+///Goethe Institut
+  GeoFirePoint eventLocGoethe = geo.point(latitude: 38.721195, longitude:  -9.140714);
+  ///estufa fria
+  GeoFirePoint eventLocEstufa = geo.point(latitude: 38.7286948, longitude:  -9.1552445);
+  ///palacio sinel
+  GeoFirePoint eventLocSinel = geo.point(latitude: 38.7160216, longitude:  -9.1251148);
+  ///mercado santa clara
+  GeoFirePoint eventLocMercado = geo.point(latitude:  38.7155921, longitude:  -9.1254624);
+  ///jardim torel
+  GeoFirePoint eventLocTorel = geo.point(latitude:  38.7188366, longitude:  -9.1413199);
+ ///garagem epal
+  GeoFirePoint eventLocGarage = geo.point(latitude:  38.719825, longitude:  -9.119935);
+  ///momagua
+  GeoFirePoint eventLocMomAgua = geo.point(latitude: 38.7213889, longitude:  -9.1558333);
+  ///severa
+  GeoFirePoint eventLocSevera = geo.point(latitude: 38.7162605, longitude:  -9.134676);
+
+  GeoFirePoint eventLocTerra = geo.point(latitude: 38.7107456, longitude:  -9.144212);
+
+  GeoFirePoint eventLocMonument = geo.point(latitude:  38.7229825, longitude:  -9.1393342);
+
+  GeoFirePoint eventLocPalacio = geo.point(latitude:  38.758551, longitude:  -9.156418);
+
+  GeoFirePoint eventLocPanteao = geo.point(latitude:  38.7149944, longitude:  -9.1246835);
+
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocMomAgua.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Mãe d’Água das Amoreiras',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocEstufa.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Estufa Fria de Lisboa',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocPanteao.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Panteão Nacional',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocMercado.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Mercado de Santa Clara',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+   firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocPalacio.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Museu de Lisboa – Palácio Pimenta',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Performances',
+    'position': eventLocTerra.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/09/logo.png',
+    'text' : 'Performances - Terraço EPAL, Largo da Anunciada, nº 5',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com'});
+
+ */
+
+  /*
     firestore
         .collection('LocationAudio')
-        .add({'name': 'cool happening', 'position': eventLoc.data,'Type':'Event', 'filename': 'woof.m4a'});
-  */
+        .add({'name': 'Installation Fictional Forests',
+              'position': eventLocSinel.data,
+              'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/08/003-019.png',
+              'text' : 'Gil Delindro - Palácio Sinel de Cordes',
+              'Type':'Event',
+              'filename':'https://www.lisboasoa.com/gil-delindro/'});
 
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation Coro',
+    'position': eventLocEstufa.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/08/003-017-1.png',
+    'text' : 'Gonçalo Alegria',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com/goncalo-alegria/'});
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation Echoplastos',
+    'position': eventLocMercado.data,
+    'imageurl' :'http://www.lisboasoa.com/wp-content/uploads/2020/08/003-015.png',
+    'text' : 'Henrique Fernandes e Tiago Ângelo',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com/henrique-fernandes-e-tiago-angelo-2/'});
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation Corpo Clima',
+    'position': eventLocTorel.data,
+    'imageurl' :'https://www.lisboasoa.com/wp-content/uploads/2020/08/003-008.png',
+    'text' : 'Nuno da Luz - Jardim do Torel',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com/nuno-da-luz/'});
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation Non-Place',
+    'position': eventLocGarage.data,
+    'imageurl' :'https://www.lisboasoa.com/wp-content/uploads/2020/08/003-006.png',
+    'text' : 'Nuno Mika Garagem EPAL',
+    'Type':'Event',
+    'filename':'http://www.lisboasoa.com/nuno-mika/'});
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation llhas – uma constelação',
+    'position': eventLocMomAgua.data,
+    'imageurl' :'https://www.lisboasoa.com/wp-content/uploads/2020/08/003-004.png',
+    'text' : 'Sara Anjo - Mãe d´Água das Amoreiras',
+    'Type':'Event',
+    'filename':'https://www.lisboasoa.com/sara-anjo/'});
+
+
+  firestore
+      .collection('LocationAudio')
+      .add({'name': 'Installation Lisboa Sem Título',
+    'position': eventLocSevera.data,
+    'imageurl' :'https://www.lisboasoa.com/wp-content/uploads/2020/08/003-002.png',
+    'text' : 'Ana Água, Carmo Rolo e Ricardo Guerreiro - Largo da Severa',
+    'Type':'Event',
+    'filename':''});
+
+
+*/
+
+
+
+
+
+
+/////////////////////////////////////////////////////////////////////////////////////
+  /*
+  firestore
+      .collection('LocationAudio')
+      .add({'name': '',
+    'position': eventLocSinel.data,
+    'imageurl' :'',
+    'text' : '',
+    'Type':'Event',
+    'filename':''});
+*/
   //code below reads from the db, and makes new markers?
   // Create a geoFirePoint for our current location (hacked for now)
   GeoFirePoint center = geo.point(latitude: 38.720586, longitude: -9.134905);

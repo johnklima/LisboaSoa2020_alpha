@@ -317,7 +317,7 @@ class _RecorderState extends State<Recorder> {
         Guid iD = Guid.newGuid;
         guid = iD.value;
         // can add extension like ".mp4" ".wav" ".m4a" ".aac"
-        loc = appDocDirectory.path + "/" + guid ;
+        loc = appDocDirectory.path + "/" + guid + ".aac";
 
         DocDir = appDocDirectory.path;
 
@@ -326,7 +326,7 @@ class _RecorderState extends State<Recorder> {
         // .wav <---> AudioFormat.WAV
         // .mp4 .m4a .aac <---> AudioFormat.AAC
         // AudioFormat is optional, if given value, will overwrite path extension when there is conflicts.
-        _recorder = FlutterAudioRecorder(loc);
+        _recorder = FlutterAudioRecorder(loc, audioFormat: AudioFormat.AAC);
         //_current.path = customPath;
 
         await _recorder.initialized;
@@ -446,7 +446,7 @@ class _RecorderState extends State<Recorder> {
 
       firestore
           .collection('LocationAudio')
-          .add({'name': recordingName , 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid + ".m4a"});
+          .add({'name': recordingName , 'position': {'geohash': position.hash, 'geopoint' : position.geoPoint}, 'Type':'Listen', 'filename': guid + ".aac"});
 
       uploadFile();
     }
@@ -461,7 +461,7 @@ class _RecorderState extends State<Recorder> {
 
       StorageReference storageReference = FirebaseStorage.instance
         .ref()
-        .child(guid + ".m4a");
+        .child(guid + ".aac");
     StorageUploadTask uploadTask = storageReference.putFile(file);
     await uploadTask.onComplete;
     print('File Uploaded');
